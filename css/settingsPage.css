@@ -1,0 +1,55 @@
+body {
+    font-family: 'Montserrat', sans-serif !important;
+    position: relative !important;
+    background-image: url(../images/background.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: -2;
+}
+
+.font-28 {
+    font-size: 28px !important;
+}
+
+nav {
+    margin-top: 52px !important;
+    margin-bottom: 96px !important;
+}
+
+p {
+    margin-bottom: 52px !important;
+}
+
+.level-buttons-row, .field-size-buttons-row {
+    margin-bottom: 100px !important;
+}
+
+.middle-btn {
+    margin-left: 105px !important;
+    margin-right: 105px !important;
+}
+
+.btn-primary {
+    color: black;
+    background-color: #C4D7F2;
+    border-color: #C4D7F2;
+}
+
+.btn {
+    font-size: 24px !important;
+    width: 192px !important;
+    height: 68px !important;
+    border-radius: 20px !important;
+}
+
+.allocation-btn {
+    width: 540px !important;
+    height: 80px !important;
+    background-color: #183D71;
+}
+
+.allocation-link {
+    color: white !important;
+}
