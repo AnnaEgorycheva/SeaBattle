@@ -9,5 +9,7 @@ body {
 
 nav {
     margin-top: 52px !important;
-    margin-bottom: 96px !important;
+    margin-bottom: 36px !important;
+    padding-left: 60px !important;
+    padding-right: 60px !important;
 }
