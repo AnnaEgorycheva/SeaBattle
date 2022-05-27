@@ -13,8 +13,8 @@
     <body>
         <nav class="navbar navbar-light">
             <div class="col-2 start-page-link">
-                <a class="navbar-brand font-28" href="StartPage.html" style="color: #183D71;">
-                    <span style="width: 18px; height: 18px; color: #183D71;">
+                <a class="navbar-brand font-24" href="StartPage.html" style="color: #183D71;">
+                    <span style="width: 16px; height: 16px; color: #183D71;">
                         <i class="fas fa-arrow-left"></i>
                     </span>
                     Назад
@@ -32,13 +32,13 @@
                 <p class="font-28">Выберите уровень</p>
             </div>
             <div class="row level-buttons-row justify-content-md-between justify-content-center mx-0">
-                <button type="button" class="btn btn-primary m-1 m-md-0" data-toggle="tooltip" data-placement="bottom" title="На данном уровне расстановка кораблей противника определяется с использованием наиболее распространенной схемы в рамках основных правил (п.2). Выстрелы же осуществляются рандомно.">
+                <button type="button" class="btn btn-primary level-btn active m-1 m-md-0" data-toggle="tooltip" data-placement="bottom" title="На данном уровне расстановка кораблей противника определяется с использованием наиболее распространенной схемы в рамках основных правил (п.2). Выстрелы же осуществляются рандомно.">
                     Легкий
                 </button>
-                <button type="button" class="btn btn-primary m-1 m-md-0" data-toggle="tooltip" data-placement="bottom" title="На данном уровне расстановка кораблей противника происходит согласно более сложным схемам, нежели на легком уровне. Выстрелы осуществляются по одному из алгоритмов, однако при попадании в цель дальнейшие выстрелы по соседним клеткам делаются рандомно.">
+                <button type="button" class="btn btn-primary level-btn m-1 m-md-0" data-toggle="tooltip" data-placement="bottom" title="На данном уровне расстановка кораблей противника происходит согласно более сложным схемам, нежели на легком уровне. Выстрелы осуществляются по одному из алгоритмов, однако при попадании в цель дальнейшие выстрелы по соседним клеткам делаются рандомно.">
                     Средний
                 </button>
-                <button type="button" class="btn btn-primary m-1 m-md-0" data-toggle="tooltip" data-placement="bottom" title="На данном уровне корабли расставляются согласно сложным схемам. Выстрелы делаются по одному из нескольких алгоритмов, и при попадании в цель дальнейшие выстрелы противником будут на поражение (при попадании в конкретную клетку противник сразу же определяет расположение всего корабля и обстреливает его).">
+                <button type="button" class="btn btn-primary level-btn m-1 m-md-0" data-toggle="tooltip" data-placement="bottom" title="На данном уровне корабли расставляются согласно сложным схемам. Выстрелы делаются по одному из нескольких алгоритмов, и при попадании в цель дальнейшие выстрелы противником будут на поражение (при попадании в конкретную клетку противник сразу же определяет расположение всего корабля и обстреливает его).">
                     Сложный
                 </button>
             </div>
@@ -48,9 +48,9 @@
                 <p class="font-28">Выберите размер поля</p>
             </div>
             <div class="row field-size-buttons-row justify-content-md-between justify-content-center mx-0">
-                <button type="button" class="btn btn-primary m-1 m-md-0">10x10</button>
-                <button type="button" class="btn btn-primary m-1 m-md-0">15x15</button>
-                <button type="button" class="btn btn-primary m-1 m-md-0">20x20</button>
+                <button type="button" class="btn btn-primary field-size-btn m-1 m-md-0 active">10x10</button>
+                <button type="button" class="btn btn-primary field-size-btn m-1 m-md-0">15x15</button>
+                <button type="button" class="btn btn-primary field-size-btn m-1 m-md-0">20x20</button>
             </div>
         </div>
         <div class="container allocation-button-container">
@@ -63,10 +63,6 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script>
-            $(document).ready(function() {
-                $('[data-toggle="tooltip"]').tooltip();
-            })
-        </script>
+        <script src="../js/settings_page.js"></script>
     </body>
 </html>
