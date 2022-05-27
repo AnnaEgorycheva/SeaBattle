@@ -30,11 +30,6 @@ p {
     margin-top: 100px !important;
 }
 
-.middle-btn {
-    margin-left: 105px !important;
-    margin-right: 105px !important;
-}
-
 .btn-primary {
     color: black;
     background-color: #C4D7F2;
@@ -56,10 +51,7 @@ p {
 
 .allocation-link {
     color: white !important;
-}
-
-.tooltip {
-    margin-top: 0px;
+    text-decoration: none !important;
 }
 
 .bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
