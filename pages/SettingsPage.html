@@ -32,13 +32,13 @@
                 <p class="font-28">Выберите уровень</p>
             </div>
             <div class="row level-buttons-row justify-content-center mx-0">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="На данном уровне расстановка кораблей противника определяется с использованием наиболее распространенной схемы в рамках основных правил (п.2). Выстрелы же осуществляются рандомно.">
                     Легкий
                 </button>
-                <button type="button" class="btn btn-primary middle-btn">
+                <button type="button" class="btn btn-primary middle-btn" data-toggle="tooltip" data-placement="bottom" title="На данном уровне расстановка кораблей противника происходит согласно более сложным схемам, нежели на легком уровне. Выстрелы осуществляются по одному из алгоритмов, однако при попадании в цель дальнейшие выстрелы по соседним клеткам делаются рандомно.">
                     Средний
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="На данном уровне корабли расставляются согласно сложным схемам. Выстрелы делаются по одному из нескольких алгоритмов, и при попадании в цель дальнейшие выстрелы противником будут на поражение (при попадании в конкретную клетку противник сразу же определяет расположение всего корабля и обстреливает его).">
                     Сложный
                 </button>
             </div>
@@ -63,5 +63,10 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('[data-toggle="tooltip"]').tooltip();
+            })
+        </script>
     </body>
 </html>

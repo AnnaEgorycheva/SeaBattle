@@ -22,8 +22,12 @@ p {
     margin-bottom: 52px !important;
 }
 
-.level-buttons-row, .field-size-buttons-row {
+.field-size-buttons-row {
     margin-bottom: 100px !important;
+}
+
+.field-size-label-row {
+    margin-top: 100px !important;
 }
 
 .middle-btn {
@@ -52,4 +56,20 @@ p {
 
 .allocation-link {
     color: white !important;
+}
+
+.tooltip {
+    margin-top: 0px;
+}
+
+.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+    border-bottom-color: #F2F9FF;
+}
+
+.tooltip-inner {
+    max-width: 400px; 
+    color: black; 
+    background-color: #F2F9FF; 
+    border-radius: 10px;
+    font-size: 18px;
 }
