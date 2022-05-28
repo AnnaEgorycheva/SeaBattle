@@ -1,5 +1,12 @@
 body {
     font-family: 'Montserrat', sans-serif !important;
+    position: relative !important;
+    background-image: url(../images/background.png);
+    background-repeat: no-repeat;
+    background-position: center ;
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: -2;
 }
 
 .font-24 {
