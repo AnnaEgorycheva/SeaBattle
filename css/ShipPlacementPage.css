@@ -1,6 +1,5 @@
 body {
     font-family: 'Montserrat', sans-serif !important;
-
 }
 
 .font-24 {
@@ -9,5 +8,23 @@ body {
 
 nav {
     margin-top: 52px !important;
-    margin-bottom: 96px !important;
+    margin-bottom: 36px !important;
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+}
+
+.playing-field {
+    margin-top: 0px !important;
+    margin-bottom: 28px !important;
+    padding-left: 60px !important;
+    padding-right: 60px !important;  
+}
+
+.parking-ships {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    background-color: #EAF2FF !important;
+    border-color: #4C6383 !important;
+    border-width: 4px !important;
+    border-radius: 20px !important;
 }
