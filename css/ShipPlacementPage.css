@@ -40,6 +40,18 @@ nav {
 .auto-placement-btn {
     margin-right: 51px !important;
     margin-top: 0px !important;
+    width: 113px !important;
+    background-color:  #5B7DAD;
+}
+
+.start-btn {
+    width: 220px !important;
+    background-color: #183D71;
+}
+
+.start-link, .auto-placement {
+    color: white !important;
+    text-decoration: none !important;
 }
 
  
