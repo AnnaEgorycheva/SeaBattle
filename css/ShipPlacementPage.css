@@ -30,3 +30,9 @@ nav {
     border-width: 4px !important;
     border-radius: 20px !important;
 }
+
+.btn {
+    font-size: 28px !important;
+    height: 63px !important;
+    border-radius: 20px !important;
+}
