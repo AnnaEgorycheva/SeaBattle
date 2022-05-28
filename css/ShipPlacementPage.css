@@ -13,3 +13,15 @@ nav {
     padding-left: 60px !important;
     padding-right: 60px !important;
 }
+
+.playing-field {
+    margin-top: 0px !important;
+    margin-bottom: 28px !important;
+    padding-left: 60px !important;
+    padding-right: 60px !important;  
+}
+
+.parking-ships {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important; 
+}
