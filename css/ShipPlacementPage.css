@@ -24,9 +24,34 @@ nav {
 
 .parking-ships {
     margin-top: 0px !important;
-    margin-bottom: 0px !important;
+    margin-bottom: 28px !important;
     background-color: #EAF2FF !important;
     border-color: #4C6383 !important;
     border-width: 4px !important;
     border-radius: 20px !important;
 }
+
+.btn {
+    font-size: 28px !important;
+    height: 63px !important;
+    border-radius: 20px !important;
+}
+
+.auto-placement-btn {
+    margin-right: 51px !important;
+    margin-top: 0px !important;
+    width: 113px !important;
+    background-color:  #5B7DAD;
+}
+
+.start-btn {
+    width: 220px !important;
+    background-color: #183D71;
+}
+
+.start-link, .auto-placement {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+ 
