@@ -47,11 +47,14 @@ nav {
 .auto-placement-btn {
     margin-right: 51px !important;
     margin-top: 0px !important;
+    margin-bottom: 102px !important;
     width: 113px !important;
     background-color:  #5B7DAD;
 }
 
 .start-btn {
+    margin-top: 0px !important;
+    margin-bottom: 102px !important;
     width: 220px !important;
     background-color: #183D71;
 }
