@@ -87,6 +87,26 @@ nav {
     padding-bottom: 0px !important;
 }
 
+.btn {
+    font-size: 28px !important;
+    height: 63px !important;
+    width: 220px !important;
+    border-radius: 20px !important;
+}
+
+.stop-game-btn {
+    width: 278px !important;
+    margin-top: 16px !important;
+    margin-bottom: 47px !important;
+    background-color:  #183D71;
+}
+
+.text-stop-game {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+
 @media (max-width: 1200px){
     .my-playing-field-block {
         margin-right: 0px !important;
@@ -128,6 +148,11 @@ nav {
 
     .deck4-block, .deck3-block {
         margin-bottom: 13px !important;
+    }
+
+    .stop-game-btn {
+        margin-top: 61px !important;
+        margin-bottom: 53px !important;
     }
 }
 
