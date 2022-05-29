@@ -17,6 +17,10 @@ body {
     font-size: 32px !important;
 }
 
+.font-28 {
+    font-size: 28px !important;
+}
+
 nav {
     margin-top: 52px !important;
     margin-bottom: 0px !important;
@@ -55,6 +59,34 @@ nav {
     margin-bottom: 0px !important;
 }
 
+.parking-ships {
+    margin-top: 32px !important;
+    margin-bottom: 40px !important;
+    background-color: #EAF2FF !important;
+    border-color: #4C6383 !important;
+    border-width: 4px !important;
+    border-radius: 20px !important;
+}
+
+.deck4-block, .deck3-block, .deck2-block, .deck1-block {
+    margin-top: 0px !important;
+    margin-bottom: 28px !important;
+    padding: 0px !important;
+}
+
+.deck4, .deck3, .deck2, .deck1 {
+    margin-right: 15px !important;
+    margin-left: 0px !important;
+    padding: 0px !important;
+}
+
+.text-ships-balance {
+    margin-top: 8px !important;
+    margin-bottom: 10px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
 @media (max-width: 1200px){
     .my-playing-field-block {
         margin-right: 0px !important;
@@ -78,6 +110,24 @@ nav {
 
     .playing-field {
         width: 528px !important;
+    }
+
+    .ships-container {
+        width: 528px !important;
+    }
+
+    .parking-ships {
+        margin-top: 42px !important;
+        width: 499px !important;
+        height: 192px !important;     
+    }
+
+    .text-ships-balance {
+        margin-bottom: 15px !important;
+    }
+
+    .deck4-block, .deck3-block {
+        margin-bottom: 13px !important;
     }
 }
 
