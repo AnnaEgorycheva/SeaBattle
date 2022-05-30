@@ -111,10 +111,10 @@ nav {
     text-decoration: none !important;
 }
 
-
-
-
-
+.stopGameModal-no-btn {
+    color: white !important;
+    text-decoration: none !important;
+}
 
 @media (max-width: 1200px){
     .my-playing-field-block {
