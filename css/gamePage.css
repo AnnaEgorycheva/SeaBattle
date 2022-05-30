@@ -101,11 +101,20 @@ nav {
     margin-bottom: 47px !important;
 }
 
-.text-stop-game, .start-page-link, .stopGameModal-no-btn {
+.text-stop-game, .start-page-link {
     color: white !important;
     text-decoration: none !important;
 }
 
+
+
+
+
+
+.stopGameModal-no-btn {
+    color: white !important;
+    text-decoration: none !important;
+}
 
 @media (max-width: 1200px){
     .my-playing-field-block {
