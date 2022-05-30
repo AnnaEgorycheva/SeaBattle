@@ -4,8 +4,37 @@ const algorythms = {};
 class Player{
     playerField;
     fieldSize;
+    ships = [];
     constructor(fieldSize){
         this.playerField = new Field(fieldSize);
+        let ship;
+        for (let i = 1; i<=4; i++){
+            switch (i){
+                case 1:
+                    for (let j = 0; j < 4; j++){
+                        ship = new Ship(1);
+                        this.ships.push(ship);
+                    }
+                    break;
+                case 2:
+                    for (let j = 0; j < 3; j++){
+                        ship = new Ship(2);
+                        this.ships.push(ship);
+                    }
+                    break;
+                case 3:
+                    for (let j = 0; j < 2; j++){
+                        ship = new Ship(3);
+                        this.ships.push(ship);
+                    }
+                    break;
+                case 4:
+                    ship = new Ship(4);
+                    this.ships.push(ship);
+                    break;
+            }
+        
+        }
     }
 }
 
@@ -66,6 +95,8 @@ class Deck{
         }
     }
 
+    
+
 }
 
 class Field{
@@ -82,6 +113,36 @@ class Field{
         }
     }
     
+    getUnhitedCells(){
+        const unhitedCells = [];
+        for (let i = 0; i < this.#size; i++){
+            for (let j = 0; j < this.#size; j++){
+                if(this.#cells[i][j].isHited == false){
+                    unhitedCells.push(this.#cells[i][j]);
+                }
+            }
+            
+        }
+        return(unhitedCells);
+    }
+
+    getUnoccupiedCells(){
+        const unoccupiedCells = [];
+        for (let i = 0; i < this.#size; i++){
+            for (let j = 0; j < this.#size; j++){
+                if(this.#cells[i][j].canShipStandHere == true){
+                    unhitedCells.push(this.#cells[i][j]);
+                }
+            }
+            
+        }
+        return(unoccupiedCells);
+    }
+
+    toBeShooted(x,y){
+        this.#cells[y][x].isHited = true;
+        //Нужно добавить проверку занятости клетки палубой. В случае если на клетке есть палуба, поменять поле палубы isKilled на true.
+    }
 }
 
 class Cell{
@@ -131,5 +192,11 @@ class Cell{
         if(typeof(val)==Boolean){
             this.#canShipStandHere = val;
         }
+    }
+
+    placeDeck(){
+        this.#canShipStandHere = false;
+        this.#isOccupied = true;
+        //Нужно добавить привязку клетки к конкретной палубе.
     }
 }
