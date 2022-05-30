@@ -15,6 +15,10 @@ class User extends Player{
         super(fieldSize);
         this.#level = level;
     }
+
+    get level(){
+        return this.level;
+    }
 }
 
 class Enemy extends Player{
@@ -36,6 +40,14 @@ class Ship{
             this.#decks[i] = new Deck();
         }
     }
+
+    get shipStatus(){
+        return this.#shipStatus;
+    }
+    set shipStatus(val){
+        this.#shipStatus = val;
+    }
+
 }
 
 class Deck{
@@ -44,6 +56,16 @@ class Deck{
     constructor(){
         this.#isKilled = false;
     }
+
+    get isKilled(){
+        return this.#isKilled;
+    }
+    set isKilled(val){
+        if(typeof(val)==Boolean){
+            this.#isKilled = val;
+        }
+    }
+
 }
 
 class Field{
@@ -74,5 +96,40 @@ class Cell{
         this.#isHited = false
         this.#isOccupied = false
         this.#canShipStandHere = true
+    }
+
+    get x(){
+        return this.x;
+    }
+    get y(){
+        return this.y;
+    }
+
+    get isHited(){
+        return this.#isHited
+    }
+    set isHited(val){
+        if(typeof(val)==Boolean){
+            this.#isHited = val;
+        }
+    }
+    
+    get isOccupied(){
+        return this.#isOccupied;
+    }
+    set isOccupied(val){
+        if(typeof(val)==Boolean){
+            this.#isOccupied = val;
+        }
+    }
+
+    get canShipStandHere(){
+        return this.#canShipStandHere;
+    }
+
+    set canShipStandHere(val){
+        if(typeof(val)==Boolean){
+            this.#canShipStandHere = val;
+        }
     }
 }
