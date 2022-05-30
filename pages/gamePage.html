@@ -32,7 +32,7 @@
             <div class="row parking-ships justify-content-center mx-auto border p-0" style=" width: 912px; height: 133px;">
                 <span class="text-center font-28 m-0 text-ships-balance" style=" width: 912px;">Осталось кораблей:</span>
                 <div class="row m-auto deck4-block">
-                    <img src="../images/deck4.png" class="mx-auto align-baseline d-block deck4" alt="SeaBattle ShipDeck4" width="168.34" height="46">
+                    <img src="../images/deck4.png" class="mx-auto d-block deck4" alt="SeaBattle ShipDeck4" width="168.34" height="46">
                     <span class="text-center font-28 mx-auto number-deck4"> x 1</span>
                 </div>
                 <div class="row m-auto deck3-block">
@@ -58,15 +58,19 @@
         </div>
         <div class="modal fade" id="stopGameModal" tabindex="-1" role="dialog" aria-labelledby="stopGameModal" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 672px;">
-              <div class="modal-content" style="width: 672px; height: 304px;">
-                <div class="modal-header row justify-content-center mx-auto">
-                  <p class="modal-title stopGameModalTitle font-32">Вы уверены?</p>
+              <div class="modal-content" style="width: 672px; height: 210px;">
+                <div class="modal-header row justify-content-center mx-auto" style="height: 101px;">
+                    <p class="modal-title stopGameModalTitle font-32">Вы уверены?</p>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn stopGameModal-yes-btn">
-                    <a class="start-page-link" href="#">Да</a>
-                  </button>
-                  <button type="button" class="btn stopGameModal-no-btn" data-dismiss="modal">Нет</button>
+                <div class="modal-footer row justify-content-center">
+                    <div class="col-auto mx-auto p-0">
+                        <button type="button" class="btn stopGameModal-yes-btn text-align-center">
+                            <a class="start-page-link" href="#">Да</a>
+                        </button>
+                    </div>
+                    <div class="col-auto mx-auto p-0">
+                        <button type="button" class="btn stopGameModal-no-btn" data-dismiss="modal">Нет</button>
+                    </div>
                 </div>
               </div>
             </div>

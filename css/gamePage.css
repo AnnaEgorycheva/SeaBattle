@@ -92,16 +92,16 @@ nav {
     height: 63px !important;
     width: 220px !important;
     border-radius: 20px !important;
+    background-color:  #183D71;
 }
 
 .stop-game-btn {
     width: 278px !important;
     margin-top: 16px !important;
     margin-bottom: 47px !important;
-    background-color:  #183D71;
 }
 
-.text-stop-game {
+.text-stop-game, .start-page-link, .stopGameModal-no-btn {
     color: white !important;
     text-decoration: none !important;
 }
