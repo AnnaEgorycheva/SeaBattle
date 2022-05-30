@@ -101,10 +101,19 @@ nav {
     margin-bottom: 47px !important;
 }
 
-.text-stop-game, .start-page-link, .settings-page-link {
+.text-stop-game, .start-page-link {
     color: white !important;
     text-decoration: none !important;
 }
+
+.settings-page-link {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+
+
+
 
 
 @media (max-width: 1200px){
@@ -156,10 +165,6 @@ nav {
     }
 }
 
-.modal-title {
-    margin-top: 27px !important;
-}
-
 .modal-content {
     border-color: #4C6383 !important;
     border-width: 4px !important;
@@ -170,4 +175,8 @@ nav {
     border: none;
     color: #183D71 !important;
     font-weight: bold !important;
+}
+
+.modal-title {
+    margin-top: 27px !important;
 }
