@@ -106,10 +106,10 @@ nav {
     text-decoration: none !important;
 }
 
-
-
-
-
+.settings-page-link {
+    color: white !important;
+    text-decoration: none !important;
+}
 
 .stopGameModal-no-btn {
     color: white !important;
@@ -175,4 +175,8 @@ nav {
     border: none;
     color: #183D71 !important;
     font-weight: bold !important;
+}
+
+.modal-title {
+    margin-top: 27px !important;
 }
