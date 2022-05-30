@@ -156,3 +156,14 @@ nav {
     }
 }
 
+.modal-content {
+    border-color: #4C6383 !important;
+    border-width: 4px !important;
+    border-radius: 20px !important;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+    color: #183D71 !important;
+    font-weight: bold !important;
+}
