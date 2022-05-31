@@ -36,6 +36,21 @@ class Player{
         
         }
     }
+
+    getUnsinkableShips(){
+        const ships = [];
+        for (let i = 0; i < this.ships.length(); i++){
+
+            if (this.ships[i].shipStatus != shipStatus.Killed){
+                ships.push(this.ships[i]);
+            }
+        }
+    }
+
+    shoot(x, y, enemy){
+        const res = enemy.playerField.toBeShooted(x,y);
+        return res;
+    }
 }
 
 class User extends Player{
@@ -74,7 +89,19 @@ class Ship{
         return this.#shipStatus;
     }
     set shipStatus(val){
-        this.#shipStatus = val;
+        if (val == shipStatus.Injured || val == shipStatus.Killed || val == shipStatus.NotKilled){
+            this.#shipStatus = val;
+        }
+    }
+
+    getNotKilledDecks(){
+        const decks = [];
+        for (let i = 0; i < this.#decks.length(); i++){
+            if(this.#decks[i].isKilled==false){
+                decks.push(this.#decks[i]);
+            }
+        }
+        return decks;
     }
 
 }
@@ -141,6 +168,12 @@ class Field{
 
     toBeShooted(x,y){
         this.#cells[y][x].isHited = true;
+        if (this.#cells[y][x].isOccupied){
+            return true;
+        }
+        else{
+            return false;
+        }
         //Нужно добавить проверку занятости клетки палубой. В случае если на клетке есть палуба, поменять поле палубы isKilled на true.
     }
 }
