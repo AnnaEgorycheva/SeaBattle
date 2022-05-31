@@ -1,5 +1,6 @@
 const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured'}
 const algorythms = {};
+let level;
 
 class Player{
     playerField;
@@ -54,21 +55,14 @@ class Player{
 }
 
 class User extends Player{
-    #level;
-    constructor(fieldSize, level){
-        super(fieldSize);
-        this.#level = level;
-    }
-
-    get level(){
-        return this.level;
-    }
+   
 }
 
 class Enemy extends Player{
     #cells = [];
     #chosenAlgorythm;
     #finishingMode;
+    #currentShip = [];
     constructor(fieldSize){
         super(fieldSize,level);
         this.#finishingMode = false;
@@ -77,7 +71,9 @@ class Enemy extends Player{
 
     }
     finishShip(){
-
+        if(this.#currentShip.length() == 1){
+            
+        }
     }
 
     changeAlgorythm(){
@@ -92,10 +88,12 @@ class Enemy extends Player{
 class Ship{
     #shipStatus;
     #decks;
+    #numOfDecks;
     constructor(numOfDecks){
+        this.#numOfDecks = numOfDecks;
         this.#decks = []
         for (let i = 0; i < numOfDecks; i++){
-            this.#decks[i] = new Deck();
+            this.#decks[i] = new Deck(this);
         }
     }
 
@@ -106,6 +104,10 @@ class Ship{
         if (val == shipStatus.Injured || val == shipStatus.Killed || val == shipStatus.NotKilled){
             this.#shipStatus = val;
         }
+    }
+
+    get numOfDecks(){
+        return this.#numOfDecks;
     }
 
     getNotKilledDecks(){
@@ -123,8 +125,10 @@ class Ship{
 class Deck{
     #isKilled;
     #position;
-    constructor(){
+    #ship;
+    constructor(ship){
         this.#isKilled = false;
+        this.#ship = ship;
     }
 
     get isKilled(){
@@ -136,6 +140,9 @@ class Deck{
         }
     }
 
+    get ship(){
+        return this.#ship;
+    }
     
 
 }
