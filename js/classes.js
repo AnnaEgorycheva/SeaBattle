@@ -73,6 +73,20 @@ class Enemy extends Player{
         super(fieldSize,level);
         this.#finishingMode = false;
     }
+    toPlay(){
+
+    }
+    finishShip(){
+
+    }
+
+    changeAlgorythm(){
+
+    }
+
+    startGame(){
+        
+    }
 }
 
 class Ship{
