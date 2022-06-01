@@ -63,16 +63,23 @@ class Enemy extends Player{
     #chosenAlgorythm;
     #finishingMode;
     #currentShip = [];
+    #usersField;
     constructor(fieldSize){
         super(fieldSize,level);
         this.#finishingMode = false;
+        this.#currentShip[0] = [];
     }
     toPlay(){
 
     }
     finishShip(){
         if(this.#currentShip.length() == 1){
-            
+            for(let i = 0; i<4; i++){
+                if()
+            }
+        }
+        else{
+
         }
     }
 
