@@ -62,24 +62,93 @@ class Enemy extends Player{
     #cells = [];
     #chosenAlgorythm;
     #finishingMode;
-    #currentShip = [];
+    #finishingCells = [];
     #usersField;
     constructor(fieldSize){
         super(fieldSize,level);
-        this.#finishingMode = false;
-        this.#currentShip[0] = [];
+        this.#finishingMode = false;;
     }
+    set userField(field){
+        this.#usersField = field;
+    }
+
     toPlay(){
 
     }
     finishShip(){
+        let x, y, res;
         if(this.#currentShip.length() == 1){
-            for(let i = 0; i<4; i++){
-                if()
+            
+            x = this.#finishingCells[0].x;
+            y = this.#finishingCells[0].y;
+            if(this.#usersField.getCell(x+1, y).isHited == false){
+                res = this.shoot(x+1, y);
+                if(res ==true){
+                    this.#finishingCells.push(this.#usersField.getCell(x+1, y));
+                }
+                   
             }
+            if(this.#usersField.getCell(x-1, y).isHited == false){
+                res = this.shoot(x-1, y);
+                if(res ==true){
+                    this.#finishingCells.push(this.#usersField.getCell(x-1, y));
+                }
+                    
+            }
+            if(this.#usersField.getCell(x, y+1).isHited == false){
+                res = this.shoot(x, y+1);
+                if(res ==true){
+                    this.#finishingCells.push(this.#usersField.getCell(x, y+1));
+                }
+                
+            }
+            if(this.#usersField.getCell(x, y-1).isHited == false){
+                res = this.shoot(x, y-1);
+                if(res ==true){
+                    this.#finishingCells.push(this.#usersField.getCell(x, y-1));
+                }
+                    
+            }
+            
         }
         else{
+            for (let i = 0; i<this.#finishingCells.length(); i++){
+                x = this.#finishingCells[i].x;
+                y = this.#finishingCells[i].y;
+                if ((this.#cells.getCell(x+1,y).isHited == false) && (this.#cells.getCell(x-1,y).isHited == true && this.#cells.getCell(x-1,y).isOccupied == true)){
+                    res = this.shoot(x+1, y);
+                    if(res ==true){
+                        this.#finishingCells.push(this.#usersField.getCell(x+1, y));
+                    }
+                    break;
+                }
+                if ((this.#cells.getCell(x-1,y).isHited == false) && (this.#cells.getCell(x+1,y).isHited == true && this.#cells.getCell(x+1,y).isOccupied == true)){
+                    res = this.shoot(x-1, y);
+                    if(res ==true){
+                        this.#finishingCells.push(this.#usersField.getCell(x-1, y));
+                    }
+                    break;
+                }
+                if ((this.#cells.getCell(x,y+1).isHited == false) && (this.#cells.getCell(x,y-1).isHited == true && this.#cells.getCell(x,y-1).isOccupied == true)){
+                    res = this.shoot(x, y+1);
+                    if(res ==true){
+                        this.#finishingCells.push(this.#usersField.getCell(x, y+1));
+                    }
+                    break;
+                }
+                if ((this.#cells.getCell(x,y-1).isHited == false) && (this.#cells.getCell(x,y+1).isHited == true && this.#cells.getCell(x,y+1).isOccupied == true)){
+                    res = this.shoot(x, y-1);
+                    if(res ==true){
+                        this.#finishingCells.push(this.#usersField.getCell(x, y-1));
+                    }
+                    break;
+                }
+            }
 
+
+        }
+        if (this.#finishingCells[0].deck.ship.shipStatus = shipStatus.Killed){
+            this.#finishingMode = false;
         }
     }
 
@@ -90,6 +159,7 @@ class Enemy extends Player{
     startGame(){
         
     }
+
 }
 
 class Ship{
@@ -150,6 +220,11 @@ class Deck{
     get ship(){
         return this.#ship;
     }
+
+    setPosition(cell){
+        cell.placeDeck(this);
+        this.#position = cell;
+    }
     
 
 }
@@ -166,6 +241,10 @@ class Field{
                 this.#cells[i][j] = new Cell(j,i);
             }
         }
+    }
+
+    getCell(x,y){
+        return this.#cells[y][x];
     }
     
     getUnhitedCells(){
@@ -211,13 +290,12 @@ class Cell{
     #y;
     #isHited;
     #isOccupied;
-    #canShipStandHere;
+    #deck;
     constructor(x, y){
         this.#x = x
         this.#y = y
         this.#isHited = false
         this.#isOccupied = false
-        this.#canShipStandHere = true
     }
 
     get x(){
@@ -245,19 +323,13 @@ class Cell{
         }
     }
 
-    get canShipStandHere(){
-        return this.#canShipStandHere;
+    get deck(){
+        return this.#deck;
     }
 
-    set canShipStandHere(val){
-        if(typeof(val)==Boolean){
-            this.#canShipStandHere = val;
-        }
-    }
-
-    placeDeck(){
-        this.#canShipStandHere = false;
+    placeDeck(deck){
         this.#isOccupied = true;
+        this.#deck = deck;
         //Нужно добавить привязку клетки к конкретной палубе.
     }
 }
