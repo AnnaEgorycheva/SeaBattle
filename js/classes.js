@@ -1,6 +1,6 @@
 const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured'}
-const algorythms = {};
-let level;
+const algorythms = {RandomGame: 'random game'};
+let level, isGameEnded = false;
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex ;
@@ -79,6 +79,7 @@ class Enemy extends Player{
     #chosenAlgorythm;
     #finishingMode;
     #finishingCells = [];
+    #didEnemyHitDeck = false;
     constructor(fieldSize){
         super(fieldSize,level);
         this.#finishingMode = false;;
@@ -87,9 +88,17 @@ class Enemy extends Player{
     toPlay(userField){
         if (this.#finishingMode){
             this.finishShip(userField)
+            if (this.#finishingMode){
+                this.randomPlay(userField);
+                this.shoot(this.#cells.shift().x,this.#cells.shift().y);
+            }
         }
         else {
-
+            let res = this.shoot(this.#cells.shift().x,this.#cells.shift().y);
+            if(res){
+                this.#finishingMode = true;
+                this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
+            }
         }
     }
 
@@ -174,8 +183,9 @@ class Enemy extends Player{
 
     }
 
-    startGame(){
-        
+    startGame(userField){
+        this.#chosenAlgorythm = algorythms.RandomGame;
+        this.randomPlay(userField);
     }
 
     randomPlay(userField){
