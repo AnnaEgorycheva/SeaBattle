@@ -2,6 +2,22 @@ const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured
 const algorythms = {};
 let level;
 
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+    while (0 !== currentIndex) {
+  
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
 class Player{
     playerField;
     fieldSize;
@@ -81,28 +97,28 @@ class Enemy extends Player{
             
             x = this.#finishingCells[0].x;
             y = this.#finishingCells[0].y;
-            if(this.#usersField.getCell(x+1, y).isHited == false){
+            if(this.#usersField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
                 res = this.shoot(x+1, y);
                 if(res ==true){
                     this.#finishingCells.push(this.#usersField.getCell(x+1, y));
                 }
                    
             }
-            if(this.#usersField.getCell(x-1, y).isHited == false){
+            else if(this.#usersField.getCell(x-1, y).isHited == false && (x - 1)>=0){
                 res = this.shoot(x-1, y);
                 if(res ==true){
                     this.#finishingCells.push(this.#usersField.getCell(x-1, y));
                 }
                     
             }
-            if(this.#usersField.getCell(x, y+1).isHited == false){
+            else if(this.#usersField.getCell(x, y+1).isHited == false && (y + 1)<this.fieldSize){
                 res = this.shoot(x, y+1);
                 if(res ==true){
                     this.#finishingCells.push(this.#usersField.getCell(x, y+1));
                 }
                 
             }
-            if(this.#usersField.getCell(x, y-1).isHited == false){
+            else if(this.#usersField.getCell(x, y-1).isHited == false && (y - 1)>=0){
                 res = this.shoot(x, y-1);
                 if(res ==true){
                     this.#finishingCells.push(this.#usersField.getCell(x, y-1));
@@ -115,28 +131,28 @@ class Enemy extends Player{
             for (let i = 0; i<this.#finishingCells.length(); i++){
                 x = this.#finishingCells[i].x;
                 y = this.#finishingCells[i].y;
-                if ((this.#cells.getCell(x+1,y).isHited == false) && (this.#cells.getCell(x-1,y).isHited == true && this.#cells.getCell(x-1,y).isOccupied == true)){
+                if ((this.#cells.getCell(x+1,y).isHited == false) && (this.#cells.getCell(x-1,y).isHited == true && this.#cells.getCell(x-1,y).isOccupied == true)&& ((x + 1)<this.fieldSize)){
                     res = this.shoot(x+1, y);
                     if(res ==true){
                         this.#finishingCells.push(this.#usersField.getCell(x+1, y));
                     }
                     break;
                 }
-                if ((this.#cells.getCell(x-1,y).isHited == false) && (this.#cells.getCell(x+1,y).isHited == true && this.#cells.getCell(x+1,y).isOccupied == true)){
+                else if ((this.#cells.getCell(x-1,y).isHited == false) && (this.#cells.getCell(x+1,y).isHited == true && this.#cells.getCell(x+1,y).isOccupied == true)&& ((x - 1)>=0)){
                     res = this.shoot(x-1, y);
                     if(res ==true){
                         this.#finishingCells.push(this.#usersField.getCell(x-1, y));
                     }
                     break;
                 }
-                if ((this.#cells.getCell(x,y+1).isHited == false) && (this.#cells.getCell(x,y-1).isHited == true && this.#cells.getCell(x,y-1).isOccupied == true)){
+                else if ((this.#cells.getCell(x,y+1).isHited == false) && (this.#cells.getCell(x,y-1).isHited == true && this.#cells.getCell(x,y-1).isOccupied == true)&& ((y + 1)<this.fieldSize)){
                     res = this.shoot(x, y+1);
                     if(res ==true){
                         this.#finishingCells.push(this.#usersField.getCell(x, y+1));
                     }
                     break;
                 }
-                if ((this.#cells.getCell(x,y-1).isHited == false) && (this.#cells.getCell(x,y+1).isHited == true && this.#cells.getCell(x,y+1).isOccupied == true)){
+                else if ((this.#cells.getCell(x,y-1).isHited == false) && (this.#cells.getCell(x,y+1).isHited == true && this.#cells.getCell(x,y+1).isOccupied == true)&& ((y - 1)>=0)){
                     res = this.shoot(x, y-1);
                     if(res ==true){
                         this.#finishingCells.push(this.#usersField.getCell(x, y-1));
@@ -158,6 +174,20 @@ class Enemy extends Player{
 
     startGame(){
         
+    }
+
+    randomPlay(){
+        let cellsLeft = this.#usersField.getUnhitedCells().length();
+        let unhitedCells = this.#usersField.getUnhitedCells();
+        let indexes = [], index;
+        for (let i = 0; i < cellsLeft; i++){
+            indexes[i] = i;
+        }
+        indexes = shuffle(indexes);
+        for (let i = 0; i < cellsLeft; i ++){
+            index = indexes[i];
+            this.#cells.push(unhitedCells[index]);
+        }
     }
 
 }
