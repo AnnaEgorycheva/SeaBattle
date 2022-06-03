@@ -79,49 +79,51 @@ class Enemy extends Player{
     #chosenAlgorythm;
     #finishingMode;
     #finishingCells = [];
-    #usersField;
     constructor(fieldSize){
         super(fieldSize,level);
         this.#finishingMode = false;;
     }
-    set userField(field){
-        this.#usersField = field;
+    
+    toPlay(userField){
+        if (this.#finishingMode){
+            this.finishShip(userField)
+        }
+        else {
+
+        }
     }
 
-    toPlay(){
-
-    }
-    finishShip(){
+    finishShip(userField){
         let x, y, res;
         if(this.#currentShip.length() == 1){
             
             x = this.#finishingCells[0].x;
             y = this.#finishingCells[0].y;
-            if(this.#usersField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
+            if(userField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
                 res = this.shoot(x+1, y);
                 if(res ==true){
-                    this.#finishingCells.push(this.#usersField.getCell(x+1, y));
+                    this.#finishingCells.push(userField.getCell(x+1, y));
                 }
                    
             }
-            else if(this.#usersField.getCell(x-1, y).isHited == false && (x - 1)>=0){
+            else if(userFieldgetCell(x-1, y).isHited == false && (x - 1)>=0){
                 res = this.shoot(x-1, y);
                 if(res ==true){
-                    this.#finishingCells.push(this.#usersField.getCell(x-1, y));
+                    this.#finishingCells.push(userField.getCell(x-1, y));
                 }
                     
             }
-            else if(this.#usersField.getCell(x, y+1).isHited == false && (y + 1)<this.fieldSize){
+            else if(userField.getCell(x, y+1).isHited == false && (y + 1)<this.fieldSize){
                 res = this.shoot(x, y+1);
                 if(res ==true){
-                    this.#finishingCells.push(this.#usersField.getCell(x, y+1));
+                    this.#finishingCells.push(userField.getCell(x, y+1));
                 }
                 
             }
-            else if(this.#usersField.getCell(x, y-1).isHited == false && (y - 1)>=0){
+            else if(userField.getCell(x, y-1).isHited == false && (y - 1)>=0){
                 res = this.shoot(x, y-1);
                 if(res ==true){
-                    this.#finishingCells.push(this.#usersField.getCell(x, y-1));
+                    this.#finishingCells.push(userField.getCell(x, y-1));
                 }
                     
             }
@@ -131,31 +133,31 @@ class Enemy extends Player{
             for (let i = 0; i<this.#finishingCells.length(); i++){
                 x = this.#finishingCells[i].x;
                 y = this.#finishingCells[i].y;
-                if ((this.#cells.getCell(x+1,y).isHited == false) && (this.#cells.getCell(x-1,y).isHited == true && this.#cells.getCell(x-1,y).isOccupied == true)&& ((x + 1)<this.fieldSize)){
+                if ((userField.getCell(x+1,y).isHited == false) && (userField.getCell(x-1,y).isHited == true && userField.getCell(x-1,y).isOccupied == true)&& ((x + 1)<this.fieldSize)){
                     res = this.shoot(x+1, y);
                     if(res ==true){
-                        this.#finishingCells.push(this.#usersField.getCell(x+1, y));
+                        this.#finishingCells.push(userField.getCell(x+1, y));
                     }
                     break;
                 }
-                else if ((this.#cells.getCell(x-1,y).isHited == false) && (this.#cells.getCell(x+1,y).isHited == true && this.#cells.getCell(x+1,y).isOccupied == true)&& ((x - 1)>=0)){
+                else if ((userField.getCell(x-1,y).isHited == false) && (userField.getCell(x+1,y).isHited == true && userField.getCell(x+1,y).isOccupied == true)&& ((x - 1)>=0)){
                     res = this.shoot(x-1, y);
                     if(res ==true){
-                        this.#finishingCells.push(this.#usersField.getCell(x-1, y));
+                        this.#finishingCells.push(userField.getCell(x-1, y));
                     }
                     break;
                 }
-                else if ((this.#cells.getCell(x,y+1).isHited == false) && (this.#cells.getCell(x,y-1).isHited == true && this.#cells.getCell(x,y-1).isOccupied == true)&& ((y + 1)<this.fieldSize)){
+                else if ((userField.getCell(x,y+1).isHited == false) && (userField.getCell(x,y-1).isHited == true && userField.getCell(x,y-1).isOccupied == true)&& ((y + 1)<this.fieldSize)){
                     res = this.shoot(x, y+1);
                     if(res ==true){
-                        this.#finishingCells.push(this.#usersField.getCell(x, y+1));
+                        this.#finishingCells.push(userField.getCell(x, y+1));
                     }
                     break;
                 }
-                else if ((this.#cells.getCell(x,y-1).isHited == false) && (this.#cells.getCell(x,y+1).isHited == true && this.#cells.getCell(x,y+1).isOccupied == true)&& ((y - 1)>=0)){
+                else if ((userField.getCell(x,y-1).isHited == false) && (userField.getCell(x,y+1).isHited == true && userField.getCell(x,y+1).isOccupied == true)&& ((y - 1)>=0)){
                     res = this.shoot(x, y-1);
                     if(res ==true){
-                        this.#finishingCells.push(this.#usersField.getCell(x, y-1));
+                        this.#finishingCells.push(userField.getCell(x, y-1));
                     }
                     break;
                 }
@@ -176,9 +178,9 @@ class Enemy extends Player{
         
     }
 
-    randomPlay(){
-        let cellsLeft = this.#usersField.getUnhitedCells().length();
-        let unhitedCells = this.#usersField.getUnhitedCells();
+    randomPlay(userField){
+        let cellsLeft = userField.getUnhitedCells().length();
+        let unhitedCells = userField.getUnhitedCells();
         let indexes = [], index;
         for (let i = 0; i < cellsLeft; i++){
             indexes[i] = i;
