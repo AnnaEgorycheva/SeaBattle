@@ -9,4 +9,11 @@ window.onload = function() {
         contextOpponent.drawImage(imgPlayingField, 0, 0, 528, 528);
         contextMy.drawImage(imgPlayingField, 0, 0, 528, 528);
     };
+    
+    function windowToCanvas(canvas, x, y) {
+        var box = canvas[0].getBoundingClientRect();
+        return { x: x - box.left * (canvas[0].width / box.width),
+            y: y - box.top * (canvas[0].height / box.height)
+        };
+    } 
 }
