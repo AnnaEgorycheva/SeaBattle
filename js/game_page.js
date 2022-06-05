@@ -15,5 +15,25 @@ window.onload = function() {
         return { x: x - box.left * (canvas[0].width / box.width),
             y: y - box.top * (canvas[0].height / box.height)
         };
-    } 
+    }; 
+    
+    function userMove(result) {
+        document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "normal";
+        document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "bold";
+        canvasOpponent[0].onmousedown = function (e) {
+            var loc = windowToCanvas(canvasOpponent, e.clientX, e.clientY);
+            console.log(loc.x);
+            console.log(loc.y);
+            if (result) {
+                
+            } else {
+               
+            }
+        }; 
+    }
+
+    //userMove(true);
 }
+
+
+
