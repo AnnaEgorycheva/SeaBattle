@@ -1,3 +1,8 @@
+html {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+    min-width: 800px !important;
+}
 body {
     font-family: 'Montserrat', sans-serif !important;
     position: relative !important;
@@ -7,6 +12,7 @@ body {
     background-attachment: fixed;
     background-size: cover;
     z-index: -2;
+    margin-top: 0px !important;
 }
 
 .font-24 {
@@ -26,7 +32,7 @@ nav {
     margin-top: 0px !important;
     margin-bottom: 28px !important;
     padding-left: 60px !important;
-    padding-right: 60px !important;  
+    padding-right: 60px !important; 
 }
 
 .parking-ships {
@@ -64,4 +70,7 @@ nav {
     text-decoration: none !important;
 }
 
- 
+.deck4, .deck3, .deck2, .deck1 {
+    cursor: pointer;
+    transform: rotate(0deg);
+}
