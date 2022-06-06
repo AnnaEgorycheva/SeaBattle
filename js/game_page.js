@@ -1,4 +1,10 @@
 window.onload = function() {
+    var sizeCoordinateMatrix = 10;
+    var coordinateMatrix = new Array(sizeCoordinateMatrix);
+    for (var i = 0; i < sizeCoordinateMatrix; i++) {
+        coordinateMatrix[i] = 52.8 * i;
+    }
+
     canvasOpponent = document.getElementsByClassName("opponent-playing-field");
     canvasMy = document.getElementsByClassName("my-playing-field");
     contextOpponent = canvasOpponent[0].getContext("2d");
@@ -17,23 +23,49 @@ window.onload = function() {
         };
     }; 
     
-    function userMove(result) {
+    function userMove() {
         document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "normal";
         document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "bold";
         canvasOpponent[0].onmousedown = function (e) {
             var loc = windowToCanvas(canvasOpponent, e.clientX, e.clientY);
-            console.log(loc.x);
-            console.log(loc.y);
+            var x = identifyCell(loc.x);
+            var y = identifyCell(loc.y);
+            //result = функция проверки клетки(x, y) получает bool
+            result = false;
             if (result) {
-                
+                hit(x, y);
             } else {
-               
+                emptyCage(x, y);
             }
         }; 
     }
 
-    //userMove(true);
+    function identifyCell(coordinate) {
+        for (var i = 0; i < sizeCoordinateMatrix - 1; i++) {
+            if (coordinate < coordinateMatrix[i + 1]) {
+                return i;
+            }
+        }
+        return sizeCoordinateMatrix - 1;
+    }
+
+    function emptyCage(x, y) {
+        var imgEmptyCage = new Image();
+        imgEmptyCage.src = "../images/emptyCage.png";
+        imgEmptyCage.onload = function() {
+            contextOpponent.drawImage(imgEmptyCage, coordinateMatrix[x], coordinateMatrix[y], 51, 51);
+        };
+        canvasOpponent[0].onmousedown = null;
+        document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "normal";
+        document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "bold";
+        
+    }
+    
+    function hit(x, y) {
+        var imgHit = new Image();
+        imgHit.src = "../images/hit.png";
+        imgHit.onload = function() {
+            contextOpponent.drawImage(imgHit, coordinateMatrix[x], coordinateMatrix[y], 51, 51);
+        };
+    }
 }
-
-
-
