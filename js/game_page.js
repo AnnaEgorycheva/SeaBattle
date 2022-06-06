@@ -36,6 +36,9 @@ window.onload = function() {
                 hit(x, y);
             } else {
                 emptyCage(x, y);
+                canvasOpponent[0].onmousedown = null;
+                document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "normal";
+                document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "bold";
             }
         }; 
     }
@@ -54,11 +57,7 @@ window.onload = function() {
         imgEmptyCage.src = "../images/emptyCage.png";
         imgEmptyCage.onload = function() {
             contextOpponent.drawImage(imgEmptyCage, coordinateMatrix[x], coordinateMatrix[y], 51, 51);
-        };
-        canvasOpponent[0].onmousedown = null;
-        document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "normal";
-        document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "bold";
-        
+        };        
     }
     
     function hit(x, y) {
