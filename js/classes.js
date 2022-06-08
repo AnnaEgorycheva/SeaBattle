@@ -79,6 +79,7 @@ class Enemy extends Player{
     #chosenAlgorythm;
     #finishingMode;
     #finishingCells = [];
+    #currentShip
     #didEnemyHitDeck = false;
     constructor(fieldSize){
         super(fieldSize,level);
@@ -86,20 +87,21 @@ class Enemy extends Player{
     }
     
     toPlay(userField){
-        if (this.#finishingMode){
+        /*if (this.#finishingMode){
             this.finishShip(userField)
             if (this.#finishingMode){
                 this.randomPlay(userField);
                 this.shoot(this.#cells.shift().x,this.#cells.shift().y);
             }
         }
-        else {
-            let res = this.shoot(this.#cells.shift().x,this.#cells.shift().y);
+        else {*/
+            let cell = this.#cells.shift();
+            let res = this.shoot(cell.x,cell.y);
             if(res){
                 this.#finishingMode = true;
                 this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
             }
-        }
+        //}
     }
 
     finishShip(userField){
@@ -189,7 +191,7 @@ class Enemy extends Player{
     }
 
     randomPlay(userField){
-        let cellsLeft = userField.getUnhitedCells().length();
+        let cellsLeft = userField.getUnhitedCells().length;
         let unhitedCells = userField.getUnhitedCells();
         let indexes = [], index;
         for (let i = 0; i < cellsLeft; i++){
@@ -277,12 +279,12 @@ class Field{
     constructor(size){
         this.#size = size
         this.#cells = [];
-        this.#cells[0] = [];
-        for(let i = 0; i < this.#size; i++){
-            for(let j = 0; j < this.#size; j++){
+        for (let i = 0; i < this.#size; i++) {
+            this.#cells[i] = []
+            for (let j = 0; j < this.#size; j++) {
                 this.#cells[i][j] = new Cell(j,i);
             }
-        }
+          }
     }
 
     getCell(x,y){
@@ -375,3 +377,9 @@ class Cell{
         //Нужно добавить привязку клетки к конкретной палубе.
     }
 }
+
+let enemy = new Enemy(10);
+let user = new User(10);
+console.log(enemy.startGame(user.playerField))
+console.log(enemy.toPlay(user.playerField));
+
