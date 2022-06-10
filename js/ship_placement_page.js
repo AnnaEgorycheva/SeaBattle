@@ -1,9 +1,19 @@
 window.onload = function() {
     var sizeCoordinateMatrix = 10;
     var coordinateMatrix = new Array(sizeCoordinateMatrix);
-    for (var i = 0; i < sizeCoordinateMatrix; i++) {
-        coordinateMatrix[i] = 52.8 * i;
+    for (var i = 0; i < 3; i++) {
+        coordinateMatrix[i] = 52.8 * i + 5;
     }
+    for (var i = 3; i < 6; i++) {
+        coordinateMatrix[i] = 52.8 * i + 3;
+    }
+    for (var i = 6; i < sizeCoordinateMatrix; i++) {
+        coordinateMatrix[i] = 52.8 * i + 1;
+    }
+
+    // document.getElementsByClassName('deck2')[0].oncontextmenu = function () {
+    //     this.style.transform = `rotate(${this.d = (this.d | 0) + 90}deg)`;
+    // }
 
     canvas = document.getElementsByClassName("playing-field"), 
     context = canvas[0].getContext("2d");
@@ -14,10 +24,9 @@ window.onload = function() {
     };
 
     let isDragging = false;
+    document.addEventListener('dblclick', function(event) {
 
-    document.addEventListener('mousedown', function(event) {
-
-        let dragElement = event.target.closest('.f');
+        let dragElement = event.target.closest('.deckShip');
 
         if (!dragElement) return;
 
@@ -27,7 +36,7 @@ window.onload = function() {
             return false;
         };
 
-        let coords, shiftX, shiftY;
+        let shiftX, shiftY;
 
         startDrag(dragElement, event.clientX, event.clientY);
 
@@ -69,10 +78,10 @@ window.onload = function() {
 
             document.removeEventListener('mousemove', onMouseMove);
 
-            // console.log("dfd" + dragElement.style.left);
-            // dragElement.style.left = (parseInt(dragElement.style.left,10)+50)+'px';
-            // console.log(dragElement.style.left);
-
+            var coord = coordinateCorrection(dragElement);
+            dragElement.style.left = coord[0] +'px';
+            dragElement.style.top = coord[1] +'px';
+            
             dragElement.removeEventListener('mouseup', onMouseUp);
         }
 
@@ -125,5 +134,121 @@ window.onload = function() {
             dragElement.style.top = newY + 'px';
         }
     });
+
+    function coordinateCorrection(element) {
+        var x = parseInt(element.style.left);
+        var y = parseInt(element.style.top);
+        var nameClass = element.className[20];
+        var indentX = (window.innerWidth - 528) / 2;
+        var indentY = 94;
+        var sizeField = 528;
+        if (x < indentX && y < indentY) {
+            return [coordinateMatrix[0] + indentX, coordinateMatrix[0] + indentY];
+        }
+        else if (x > indentX + sizeField && y < indentY) {
+            if (nameClass === "1") {
+                return [coordinateMatrix[9] + indentX, coordinateMatrix[0] + indentY];
+            }
+            else if (nameClass === "2") {
+                return [coordinateMatrix[8] + indentX, coordinateMatrix[0] + indentY];
+            }
+            else if (nameClass === "3") {
+                return [coordinateMatrix[7] + indentX, coordinateMatrix[0] + indentY];
+            }
+            else if (nameClass === "4") {
+                return [coordinateMatrix[6] + indentX, coordinateMatrix[0] + indentY];
+            }            
+        }
+        else if (y < indentY) {
+            for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
+                if (x < coordinateMatrix[i + 1] + indentX) {
+                    return [coordinateMatrix[i] + indentX, coordinateMatrix[0] + indentY];
+                }
+            }
+            return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[0] + indentY];
+        }
+        else if (x < indentX && y > indentY + sizeField) {
+            return [coordinateMatrix[0] + indentX, coordinateMatrix[9] + indentY];
+        }
+        else if (x > indentX + sizeField && y > indentY + sizeField) {
+            if (nameClass === "1") {
+                return [coordinateMatrix[9] + indentX, coordinateMatrix[9] + indentY];
+            }
+            else if (nameClass === "2") {
+                return [coordinateMatrix[8] + indentX, coordinateMatrix[9] + indentY];
+            }
+            else if (nameClass === "3") {
+                return [coordinateMatrix[7] + indentX, coordinateMatrix[9] + indentY];
+            }
+            else if (nameClass === "4") {
+                return [coordinateMatrix[6] + indentX, coordinateMatrix[9] + indentY];
+            }            
+        }
+        else if (y > indentY + sizeField) {
+            for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
+                if (x < coordinateMatrix[i + 1] + indentX) {
+                    return [coordinateMatrix[i] + indentX, coordinateMatrix[9] + indentY];
+                }
+            }
+            return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[9] + indentY];
+        }
+        else if (x < indentX) {
+            for (var i = 0; i < sizeCoordinateMatrix - 1; i++) {
+                if (y < coordinateMatrix[i + 1] + indentY) {
+                    return [coordinateMatrix[0] + indentX, coordinateMatrix[i] + indentY];
+                }
+            }
+            return [coordinateMatrix[0] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+        }
+        else if (x > indentX + sizeField) {
+            for (var i = 0; i < sizeCoordinateMatrix - 1; i++) {
+                if (y < coordinateMatrix[i + 1] + indentY) {
+                    if (nameClass === "1") {
+                        return [coordinateMatrix[9] + indentX, coordinateMatrix[i] + indentY];
+                    }
+                    else if (nameClass === "2") {
+                        return [coordinateMatrix[8] + indentX, coordinateMatrix[i] + indentY];
+                    }
+                    else if (nameClass === "3") {
+                        return [coordinateMatrix[7] + indentX, coordinateMatrix[i] + indentY];
+                    }
+                    else if (nameClass === "4") {
+                        return [coordinateMatrix[6] + indentX, coordinateMatrix[i] + indentY];
+                    }    
+                }
+            }
+            if (nameClass === "1") {
+                return [coordinateMatrix[9] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+            }
+            else if (nameClass === "2") {
+                return [coordinateMatrix[8] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+            }
+            else if (nameClass === "3") {
+                return [coordinateMatrix[7] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+            }
+            else if (nameClass === "4") {
+                return [coordinateMatrix[6] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+            }   
+        }
+        else {
+            for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
+                if (x < coordinateMatrix[i + 1] + indentX) {
+                    for (var j = 0; j < sizeCoordinateMatrix - 1; j++) {
+                        if (y < coordinateMatrix[j + 1] + indentY) {
+                            return [coordinateMatrix[i] + indentX, coordinateMatrix[j] + indentY];
+                        }
+                    }
+                    return [coordinateMatrix[i] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+                    
+                }
+            }
+            for (var j = 0; j < sizeCoordinateMatrix - 1; j++) {
+                if (y < coordinateMatrix[j + 1] + indentY) {
+                    return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[j] + indentY];
+                }
+            }
+            return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+        }
+    }
 }
 
