@@ -80,8 +80,9 @@ function randomLocationShips(playerField, playerShips) {
 
 
 
-function checkShipLocationForDiagonalAlgoritm(x, y, kx, ky, decks) {
+function checkShipLocationForDiagonalAlgoritm(x, y, kx, ky, decks, locationAlgorithm) {
     let fromX, toX, fromY, toY;
+    let res = true;
 
 	fromX = (x == 0) ? x : x - 1;
     if (kx == 1)
@@ -96,24 +97,38 @@ function checkShipLocationForDiagonalAlgoritm(x, y, kx, ky, decks) {
         toY = (y == 9) ? y + 1 : y + 2;
 
 	if (toX === undefined || toY === undefined) 
-        return false;
-    
-    let k = 0;
-    while (k < decks) {
-        let i_x = x + k * kx;
-        let j_y = y + k * ky;
-        if(i_x == j_y || i_x == (9 - j_y)){
-            return false
-        }
-        k++;
+        res = false;
+
+    switch(SHIP_LOCATION_ALGORITHMS[locationAlgorithm]){
+        case 1:
+            let k = 0;
+            while (k < decks) {
+                let i_x = x + k * kx;
+                let j_y = y + k * ky;
+                if(i_x == j_y || i_x == (9 - j_y)){
+                    res = false
+                }
+                k++;
+            }
+            break;
     }
+    
+    // let k = 0;
+    // while (k < decks) {
+    //     let i_x = x + k * kx;
+    //     let j_y = y + k * ky;
+    //     if(i_x == j_y || i_x == (9 - j_y)){
+    //         return false
+    //     }
+    //     k++;
+    // }
     for (let i = fromX; i < toX; i++) {
         for (let j = fromY; j < toY; j++) {
             if (field[j][i] == 1)
-                return false;
+                res = false;
         }
     }
-	return true;
+	return res;
 }
 
 function getStartDeckCoordForDiagonalAlgoritm(decksNum, locationAlgorithm) {
@@ -129,19 +144,19 @@ function getStartDeckCoordForDiagonalAlgoritm(decksNum, locationAlgorithm) {
         y = getRandomNumber(9);
 	}
 
-    let result;
-    switch(SHIP_LOCATION_ALGORITHMS[locationAlgorithm]){
-        case 0:
-            result = checkShipLocationForRandomAlgoritm(x, y, kx, ky, decksNum);
-            break;
-        case 1:
-            result = checkShipLocationForDiagonalAlgoritm(x, y, kx, ky, decksNum);
-            break;
-    }
-    //let result = checkShipLocationForDiagonalAlgoritm(x, y, kx, ky, decksNum);
+    // let result;
+    // switch(SHIP_LOCATION_ALGORITHMS[locationAlgorithm]){
+    //     case 0:
+    //         result = checkShipLocationForRandomAlgoritm(x, y, kx, ky, decksNum);
+    //         break;
+    //     case 1:
+    //         result = checkShipLocationForDiagonalAlgoritm(x, y, kx, ky, decksNum);
+    //         break;
+    // }
+    let result = checkShipLocationForDiagonalAlgoritm(x, y, kx, ky, decksNum, locationAlgorithm);
 
 	if (!result) 
-        return getStartDeckCoordForDiagonalAlgoritm(decksNum);
+        return getStartDeckCoordForDiagonalAlgoritm(decksNum, locationAlgorithm);
     return {x, y, kx, ky}; // координаты первой палубы корабля, а также информацию о направлении
 }
 
@@ -161,9 +176,6 @@ function getShipsLocation(locationAlgorithm) {
             while (k < decks) {
                 let i_x = shipInfo.x + k * shipInfo.kx;
                 let j_y = shipInfo.y + k * shipInfo.ky;
-                if(i_x == j_y || i_x == (9 - j_y)){
-                    return getStartDeckCoordForDiagonalAlgoritm(decks, locationAlgorithm);
-                }
                 field[j_y][i_x] = 1;
                 k++;
             }
