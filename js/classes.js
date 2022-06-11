@@ -84,21 +84,21 @@ class Enemy extends Player{
     }
     
     toPlay(userField){
-        /*if (this.#finishingMode){
+        if (this.#finishingMode){
             this.finishShip(userField)
             if (this.#finishingMode){
                 this.randomPlay(userField);
                 this.shoot(this.#cells.shift().x,this.#cells.shift().y);
             }
         }
-        else {*/
+        else {
             let cell = this.#cells.shift();
             let res = this.shoot(cell.x,cell.y, userField);
             if(res){
                 this.#finishingMode = true;
                 this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
             }
-        //}
+        }
     }
 
     finishShip(userField){
@@ -343,22 +343,6 @@ class Cell{
         this.isHited = false
         this.#isOccupied = false
     }
-
-    /*get x(){
-        return this.x;
-    }
-    get y(){
-        return this.y;
-    }*/
-
-    /*get isHited(){
-        return this.#isHited
-    }
-    set isHited(val){
-        if(typeof(val)==Boolean){
-            this.#isHited = val;
-        }
-    }*/
     
     get isOccupied(){
         return this.#isOccupied;
