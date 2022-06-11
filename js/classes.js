@@ -220,6 +220,10 @@ class Ship{
         }
     }
 
+    get decks(){
+        return this.#decks;
+    }
+
     get shipStatus(){
         return this.#shipStatus;
     }
