@@ -1,11 +1,17 @@
-//field = [...Array(10)].map(() => Array(10).fill(0));
+let SHIP_LOCATION_ALGORITHMS = {
+    random_ship_location_algoritm: 0,
+    diagonals_ship_location_algorithm: 1
+}
+let chosenAlgorithm; 
+//let field = [...Array(10)].map(() => Array(10).fill(0));
 
 function getRandomNumber(n) {
     return Math.floor(Math.random() * (n + 1));
 } 
 
-function checkShipLocation(x, y, kx, ky, decks, playerField) {
+function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
     let fromX, toX, fromY, toY;
+    let res = true;
 
 	fromX = (x == 0) ? x : x - 1;
     if (kx == 1)
@@ -20,19 +26,31 @@ function checkShipLocation(x, y, kx, ky, decks, playerField) {
         toY = (y == 9) ? y + 1 : y + 2;
 
 	if (toX === undefined || toY === undefined) 
-        return false;
+        res =  false;
 
+    switch(SHIP_LOCATION_ALGORITHMS[algorithm]) {
+        case 1:
+            let k = 0;
+            while (k < decks) {
+                let i_x = x + k * kx;
+                let j_y = y + k * ky;
+                if (i_x == j_y || i_x == (9 - j_y)) 
+                    res = false;
+                k++;
+            }
+            break;
+    }
     for (let i = fromX; i < toX; i++) {
         for (let j = fromY; j < toY; j++) {
             let currentCell = playerField.getCell(j, i);
             if (currentCell.isOccupied == true)
-                return false;
+                res = false;
         }
     }
-	return true;
+	return res;
 }
 
-function getStartDeckCoord(decksNum, playerField) {
+function getStartDeckCoord(decksNum, playerField, algorithm) {
     let x, y;
     let kx = getRandomNumber(1); 
     let ky = (kx == 0) ? 1 : 0;
@@ -45,18 +63,18 @@ function getStartDeckCoord(decksNum, playerField) {
         y = getRandomNumber(9);
 	}
 
-    let result = checkShipLocation(x, y, kx, ky, decksNum, playerField);
+    let result = checkShipLocation(x, y, kx, ky, decksNum, playerField, algorithm);
 
 	if (!result) 
-        return getStartDeckCoord(decksNum, playerField);
+        return getStartDeckCoord(decksNum, playerField, algorithm);
     return {x, y, kx, ky}; // координаты первой палубы корабля, а также информацию о направлении
 }
 
-function randomLocationShips(playerField, playerShips) {
+function getShipsLocation(playerField, playerShips, algorithm) {
     for (let ship of playerShips) {
 		let decks = ship.numOfDecks;
 
-		let shipInfo = getStartDeckCoord(decks, playerField);
+		let shipInfo = getStartDeckCoord(decks, playerField, algorithm);
         let k = 0;
         for (let deck of ship.decks) {
             let x = shipInfo.x + k * shipInfo.kx;
@@ -69,8 +87,10 @@ function randomLocationShips(playerField, playerShips) {
     }
 }
 
-let enemy = new Enemy(10);
-randomLocationShips(enemy.playerField, enemy.ships);
+
+// chosenAlgorithm = 'diagonals_ship_location_algorithm';
+// let enemy = new Enemy(10);
+// getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
 // for(let i = 0; i<10;i++){
 //     for(let j = 0;j<10;j++){
 //         let cur = enemy.playerField.getCell(i,j);
@@ -78,4 +98,5 @@ randomLocationShips(enemy.playerField, enemy.ships);
 //             field[j][i] = 1;
 //     }
 // }
+// console.log(enemy);
 // console.log(field);
