@@ -64,10 +64,7 @@ class Player{
         }
     }
 
-    shoot(x, y, enemy){
-        const res = enemy.playerField.toBeShooted(x,y);
-        return res;
-    }
+    
 }
 
 class User extends Player{
@@ -96,7 +93,7 @@ class Enemy extends Player{
         }
         else {*/
             let cell = this.#cells.shift();
-            let res = this.shoot(cell.x,cell.y);
+            let res = this.shoot(cell.x,cell.y, userField);
             if(res){
                 this.#finishingMode = true;
                 this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
@@ -111,7 +108,7 @@ class Enemy extends Player{
             x = this.#finishingCells[0].x;
             y = this.#finishingCells[0].y;
             if(userField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
-                res = this.shoot(x+1, y);
+                res = this.shoot(x+1, y, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x+1, y));
                 }
@@ -202,6 +199,11 @@ class Enemy extends Player{
             index = indexes[i];
             this.#cells.push(unhitedCells[index]);
         }
+    }
+    
+    shoot(x, y, userField){
+        const res = userField.toBeShooted(x,y);
+        return res;
     }
 
 }
@@ -330,33 +332,33 @@ class Field{
 }
 
 class Cell{
-    #x;
-    #y;
-    #isHited;
+    x;
+    y;
+    isHited;
     #isOccupied;
     #deck;
     constructor(x, y){
-        this.#x = x
-        this.#y = y
-        this.#isHited = false
+        this.x = x
+        this.y = y
+        this.isHited = false
         this.#isOccupied = false
     }
 
-    get x(){
+    /*get x(){
         return this.x;
     }
     get y(){
         return this.y;
-    }
+    }*/
 
-    get isHited(){
+    /*get isHited(){
         return this.#isHited
     }
     set isHited(val){
         if(typeof(val)==Boolean){
             this.#isHited = val;
         }
-    }
+    }*/
     
     get isOccupied(){
         return this.#isOccupied;
@@ -378,8 +380,4 @@ class Cell{
     }
 }
 
-let enemy = new Enemy(10);
-let user = new User(10);
-console.log(enemy.startGame(user.playerField))
-console.log(enemy.toPlay(user.playerField));
 
