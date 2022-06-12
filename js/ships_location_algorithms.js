@@ -7,10 +7,6 @@ let SHIP_LOCATION_ALGORITHMS = {
 let chosenAlgorithm; 
 let field = [...Array(10)].map(() => Array(10).fill(0));
 
-// function getRandomNumber(min, max) {
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
-// } 
-
 function getRandomNumber(boundInfo) {
     let randomNumber, randomIndex;
     switch(boundInfo.type) {
@@ -66,11 +62,8 @@ function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
 	return res;
 }
 
-function getStartDeckCoord(decksNum, playerField, algorithm) {
-    let x, y, x_possible, y_possible;
-    let kx = getRandomNumber({type: "range", min: 0, max: 1}); 
-    let ky = (kx == 0) ? 1 : 0;
-
+function getPossibleValuesOfTheStartCoordinates(kx, decksNum, algorithm) {
+    let x_possible, y_possible;
     switch(SHIP_LOCATION_ALGORITHMS[algorithm]) {
         case 0:
         case 1:
@@ -110,13 +103,24 @@ function getStartDeckCoord(decksNum, playerField, algorithm) {
             }
             break;
     }
+    return [x_possible, y_possible];
+}
+
+function getStartDeckCoord(decksNum, playerField, algorithm) {
+    let x, y, possibleValues, x_possible, y_possible;
+    let kx = getRandomNumber({type: "range", min: 0, max: 1}); 
+    let ky = (kx == 0) ? 1 : 0;
+
+    possibleValues = getPossibleValuesOfTheStartCoordinates(kx, decksNum, algorithm);
+    x_possible = possibleValues[0];
+    y_possible = possibleValues[1];
 
     x = getRandomNumber(x_possible);
     y = getRandomNumber(y_possible);
 
     let result = checkShipLocation(x, y, kx, ky, decksNum, playerField, algorithm);
 
-	if (!result) 
+	if ( !result ) 
         return getStartDeckCoord(decksNum, playerField, algorithm);
     return {x, y, kx, ky}; // координаты первой палубы корабля, а также информацию о направлении
 }
@@ -142,10 +146,10 @@ function getShipsLocation(playerField, playerShips, algorithm) {
 chosenAlgorithm = 'hard_shores_ship_location_algorithm';
 let enemy = new Enemy(10);
 getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
-for(let i = 0; i<10;i++){
-    for(let j = 0;j<10;j++){
-        let cur = enemy.playerField.getCell(i,j);
-        if(cur.isOccupied == true)
+for(let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+        let cur = enemy.playerField.getCell(i, j);
+        if (cur.isOccupied == true)
             field[j][i] = 1;
     }
 }
