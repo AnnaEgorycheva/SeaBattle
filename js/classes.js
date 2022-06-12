@@ -25,7 +25,7 @@ class Player{
     constructor(fieldSize){
         this.playerField = new Field(fieldSize);
         let ship;
-        for (let i = 1; i<=4; i++){
+        for (let i = 4; i>=1; i--){
             switch (i){
                 case 1:
                     for (let j = 0; j < 4; j++){

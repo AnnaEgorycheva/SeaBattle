@@ -1,13 +1,28 @@
 let SHIP_LOCATION_ALGORITHMS = {
     random_ship_location_algoritm: 0,
-    diagonals_ship_location_algorithm: 1
+    diagonals_ship_location_algorithm: 1,
+    shores_ship_location_algorithm: 2
 }
 let chosenAlgorithm; 
-//let field = [...Array(10)].map(() => Array(10).fill(0));
+let field = [...Array(10)].map(() => Array(10).fill(0));
 
-function getRandomNumber(n) {
-    return Math.floor(Math.random() * (n + 1));
-} 
+// function getRandomNumber(min, max) {
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+// } 
+
+function getRandomNumber(boundInfo) {
+    let randomNumber, randomIndex;
+    switch(boundInfo.type) {
+        case 'range':
+            randomNumber = Math.floor(Math.random() * (boundInfo.max - boundInfo.min + 1)) + boundInfo.min;
+            break;
+        case 'enum':
+            randomIndex = Math.floor(Math.random() * boundInfo.arr.length);
+            randomNumber = boundInfo.arr[randomIndex];
+            break;
+    }
+    return randomNumber;
+}
 
 function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
     let fromX, toX, fromY, toY;
@@ -51,17 +66,36 @@ function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
 }
 
 function getStartDeckCoord(decksNum, playerField, algorithm) {
-    let x, y;
-    let kx = getRandomNumber(1); 
+    let x, y, x_possible, y_possible;
+    let kx = getRandomNumber({type: "range", min: 0, max: 1}); 
     let ky = (kx == 0) ? 1 : 0;
 
-    if (kx == 0) {
-		x = getRandomNumber(9); 
-        y = getRandomNumber(10 - decksNum);
-	} else {
-		x = getRandomNumber(10 - decksNum); 
-        y = getRandomNumber(9);
-	}
+    switch(SHIP_LOCATION_ALGORITHMS[algorithm]) {
+        case 0:
+        case 1:
+            if (kx == 0) {
+                x_possible = {type: "range", min: 0, max: 9};
+                y_possible = {type: "range", min: 0, max: (10 - decksNum)};
+            }
+            else {
+                x_possible = {type: "range", min: 0, max: (10 - decksNum)};
+                y_possible = {type: "range", min: 0, max: 9};
+            }
+            break;
+        case 2:
+            if (kx == 0) {
+                x_possible = {type: "enum", arr: [0, 9]};
+                y_possible = {type: "range", min: 0, max: (10 - decksNum)};
+            }
+            else {
+                x_possible = {type: "range", min: 0, max: (10 - decksNum)};
+                y_possible = {type: "enum", arr: [0, 9]};
+            }
+            break;
+    }
+
+    x = getRandomNumber(x_possible);
+    y = getRandomNumber(y_possible);
 
     let result = checkShipLocation(x, y, kx, ky, decksNum, playerField, algorithm);
 
@@ -88,15 +122,15 @@ function getShipsLocation(playerField, playerShips, algorithm) {
 }
 
 
-// chosenAlgorithm = 'diagonals_ship_location_algorithm';
-// let enemy = new Enemy(10);
-// getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
-// for(let i = 0; i<10;i++){
-//     for(let j = 0;j<10;j++){
-//         let cur = enemy.playerField.getCell(i,j);
-//         if(cur.isOccupied == true)
-//             field[j][i] = 1;
-//     }
-// }
-// console.log(enemy);
-// console.log(field);
+chosenAlgorithm = 'shores_ship_location_algorithm';
+let enemy = new Enemy(10);
+getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
+for(let i = 0; i<10;i++){
+    for(let j = 0;j<10;j++){
+        let cur = enemy.playerField.getCell(i,j);
+        if(cur.isOccupied == true)
+            field[j][i] = 1;
+    }
+}
+console.log(enemy);
+console.log(field);
