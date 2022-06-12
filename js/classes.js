@@ -1,6 +1,6 @@
 const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured'}
-const algorythms = {RandomGame: 'random game'};
-let level, isGameEnded = false;
+const algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting'};
+let level = 1, isGameEnded = false;
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex ;
@@ -178,8 +178,15 @@ class Enemy extends Player{
         }
     }
 
-    changeAlgorythm(){
-
+    changeAlgorythm(userField){
+        if (level == 1){
+            this.#chosenAlgorythm = algorythms.RandomGame;
+            this.randomPlay(userField);
+        }
+        else{
+            this.#chosenAlgorythm = algorythms.DiagonalShooting;
+            this.diagonalsShooting(userField);
+        }
     }
 
     startGame(userField){
