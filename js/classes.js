@@ -28,8 +28,10 @@ class Player{
     playerField;
     fieldSize;
     ships = [];
+    wasShipHited;
     constructor(fieldSize){
         this.playerField = new Field(fieldSize);
+        this.wasShipHited = false;
         let ship;
         for (let i = 1; i<=4; i++){
             switch (i){
@@ -103,6 +105,7 @@ class Enemy extends Player{
             if(res){
                 this.#finishingMode = true;
                 this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
+                this.wasShipHited = true;
             }
         }
     }
@@ -120,7 +123,7 @@ class Enemy extends Player{
                 }
                    
             }
-            else if(userFieldgetCell(x-1, y).isHited == false && (x - 1)>=0){
+            else if(userField.getCell(x-1, y).isHited == false && (x - 1)>=0){
                 res = this.shoot(x-1, y, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x-1, y));
