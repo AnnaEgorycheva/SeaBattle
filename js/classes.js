@@ -1,6 +1,6 @@
 const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured'}
-const algorythms = {RandomGame: 'random game'};
-let level, isGameEnded = false;
+const algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting', EdgesShooting: 'edges shooting', DiagonalsShooting2: 'diagonal shooting 2', DiagonalsShooting3: 'diagonal shooting 3', ChessOrder: 'chess order', ShootCenter: 'shoot center'};
+let level = 1, isGameEnded = false;
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex ;
@@ -16,6 +16,12 @@ function shuffle(array) {
     }
   
     return array;
+  }
+
+  function getRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; 
   }
 
 class Player{
@@ -178,8 +184,15 @@ class Enemy extends Player{
         }
     }
 
-    changeAlgorythm(){
-
+    changeAlgorythm(userField){
+        if (level == 1){
+            this.#chosenAlgorythm = algorythms.RandomGame;
+            this.randomPlay(userField);
+        }
+        else{
+            this.#chosenAlgorythm = algorythms.DiagonalShooting;
+            this.diagonalsShooting(userField);
+        }
     }
 
     startGame(userField){
@@ -201,9 +214,159 @@ class Enemy extends Player{
         }
     }
     
+    diagonalsShooting(userField){
+        let j = 0;
+        let k = 9;
+        let cell;
+        for(let i = 0; i<10; i++){
+            cell = userField.getCell(j, i);
+            if(cell.isHited == false){
+                this.#cells.push(cell)
+            }
+            cell = userField.getCell(k, i);
+            if(cell.isHited == false){
+                this.#cells.push(cell)
+            }
+            j = j + 1;
+            k = k - 1;
+        }
+    }
+
+    edgesShooting(userField){
+        let cell;
+        for(let i = 0; i<10; i = i+9){
+            for(let j = 0; j<10; j=j+2){
+                cell = userField.getCell(j,i);
+                if(cell.isHited == false){
+                    this.#cells.push(cell)
+                }
+            }
+        }
+        for(let i = 0; i<10; i = i+9){
+            for(let j = 0; j<10; j=j+2){
+                cell = userField.getCell(i,j);
+                if(cell.isHited == false){
+                    this.#cells.push(cell)
+                }
+            }
+        }
+
+    }
+
+    diagonalsShooting2(userField){
+        let k;
+        let rnd = getRandom(0,1);
+        let cell;
+        switch (rnd){
+            case 0:
+                k = getRandom(0,2);
+                for (let i = 0; i<10; i++){
+                    for(let j = k; j<=9; j = j + 3){
+                        cell = userField.getCell(j,i);
+                        if(cell.isHited == false){
+                            this.#cells.push(cell);
+                        }
+                        k = j;
+                    }
+                    k = k - 8;
+                    if (k < 0){
+                        k = k + 3;
+                    }
+                }
+                break;
+            case 1:
+                k = getRandom(7,9);
+                for(let i = 0; i<10; i++){
+                    for(let j = k; j>=0; j = j - 3){
+                        cell = userField.getCell(j,i);
+                        if(cell.isHited == false){
+                            this.#cells.push(cell);
+                        }
+                        k = j;
+                    }
+                    k = k + 8;
+                    if (k > 9){
+                        k = k - 3;
+                    }
+                }
+                break;
+        }
+        
+    }
+
+    diagonalsShooting3(userField){
+        let k;
+        let rnd = getRandom(0,1);
+        let cell;
+        switch(rnd){
+            case 0:
+                k = getRandom(0,3);
+                for (let i = 0; i<10; i++){
+                    for(let j = k; j<=9; j = j + 4){
+                        cell = userField.getCell(j,i);
+                        if(cell.isHited == false){
+                            this.#cells.push(cell);
+                        }
+                        k = j;
+                    }
+                    k = k - 7;
+                    if (k < 0){
+                        k = k + 4;
+                    }
+                }
+                break;
+            case 1:
+                k = getRandom(6,9);
+                for (let i = 0; i<10; i++){
+                    for(let j = k; j>=0; j = j - 4){
+                        cell = userField.getCell(j,i);
+                        if(cell.isHited == false){
+                            this.#cells.push(cell);
+                        }
+                        k = j;
+                    }
+                    k = k + 7;
+                    if (k > 9){
+                        k = k - 4;
+                    }
+                }
+                break;
+        }
+    }
+
+    shootInChessOrder(userField){
+        let k = getRandom(0,1);
+        let cell;
+        for(let i = 0; i<10; i++){
+            for(let j = k; j<10; j = j+2){
+                cell = userField.getCell(j,i);
+                if(cell.isHited == false){
+                    this.#cells.push(cell);
+                }
+                k = j;
+            }
+            k = k - 9;
+            if (k<0){
+                k = k + 2;
+            }
+        }
+    }
+    
     shoot(x, y, userField){
         const res = userField.toBeShooted(x,y);
         return res;
+    }
+
+    shootCenter(userField){
+        let cell;
+        for (let i = 3; i<7; i++){
+            for (let j = 3; j<7; j++){
+                cell = userField.getCell(j, i);
+                if(cell.isHited == false){
+                    this.#cells.push(cell)
+                }
+            }
+        }
     }
 
 }
@@ -367,5 +530,4 @@ class Cell{
         //Нужно добавить привязку клетки к конкретной палубе.
     }
 }
-
 
