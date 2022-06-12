@@ -41,7 +41,7 @@ const SHIP_LOCATION_ALGORITHMS = {
 let chosenAlgorithm; 
 let field = [...Array(10)].map(() => Array(10).fill(0));
 
-function getRandomNumber(boundInfo) {
+function getRandomValue(boundInfo) {
     let randomNumber, randomIndex;
     switch(boundInfo.type) {
         case 'range':
@@ -206,15 +206,15 @@ function getPossibleValuesOfTheStartCoordinates(kx, decksNum, algorithm) {
 
 function getStartDeckCoord(decksNum, playerField, algorithm) {
     let x, y, possibleValues, x_possible, y_possible;
-    let kx = getRandomNumber({type: "range", min: 0, max: 1}); 
+    let kx = getRandomValue({type: "range", min: 0, max: 1}); 
     let ky = (kx == 0) ? 1 : 0;
 
     possibleValues = getPossibleValuesOfTheStartCoordinates(kx, decksNum, algorithm);
     x_possible = possibleValues[0];
     y_possible = possibleValues[1];
 
-    x = getRandomNumber(x_possible);
-    y = getRandomNumber(y_possible);
+    x = getRandomValue(x_possible);
+    y = getRandomValue(y_possible);
 
     let result = checkShipLocation(x, y, kx, ky, decksNum, playerField, algorithm);
 
@@ -242,7 +242,7 @@ function getShipsLocation(playerField, playerShips, algorithm) {
 
 
 function chooseAlgorithmBasedOnLevel(chosenLevel) {
-    return getRandomNumber({type: "enum", arr: SHIP_LOCATION_ALGORITHMS[chosenLevel]});
+    return getRandomValue({type: "enum", arr: SHIP_LOCATION_ALGORITHMS[chosenLevel]});
 }
 
 chosenAlgorithm = chooseAlgorithmBasedOnLevel("hard");
