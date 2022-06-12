@@ -1,12 +1,3 @@
-// let SHIP_LOCATION_ALGORITHMS = {
-//     random_ship_location_algoritm: 0,
-//     diagonals_ship_location_algorithm: 1,
-//     shores_ship_location_algorithm: 2,
-//     hard_shores_ship_location_algorithm: 3,
-//     half_horizontal_field_ship_location_algorithm: 4,
-//     half_vertical_field_ship_location_algorithm: 5,
-// }
-
 const SHIP_LOCATION_ALGORITHMS = {
     easy: [
         {
@@ -30,12 +21,20 @@ const SHIP_LOCATION_ALGORITHMS = {
             code: 3
         },
         {
-            name: 'half_horizontal_field_ship_location_algorithm', 
+            name: 'half_horizontal_bottom_field_ship_location_algorithm', 
             code: 4
         },
         {
-            name: 'half_vertical_field_ship_location_algorithm', 
+            name: 'half_horizontal_top_field_ship_location_algorithm', 
             code: 5
+        },
+        {
+            name: 'half_vertical_left_field_ship_location_algorithm', 
+            code: 6
+        },
+        {
+            name: 'half_vertical_right_field_ship_location_algorithm', 
+            code: 7
         }
     ],
 }
@@ -156,6 +155,22 @@ function getPossibleValuesOfTheStartCoordinates(kx, decksNum, algorithm) {
         case 5:
             if (decksNum != 1) {
                 if (kx == 0) {
+                    x_possible = {type: "range", min: 0, max: 9};
+                    y_possible = {type: "range", min: 5, max: (10 - decksNum)};
+                }
+                else {
+                    x_possible = {type: "range", min: 0, max: (10 - decksNum)};
+                    y_possible = {type: "range", min: 5, max: 9};
+                }
+            }
+            else {
+                x_possible = {type: "range", min: 0, max: 9};
+                y_possible = {type: "range", min: 0, max: 4}; 
+            }
+            break;
+        case 6:
+            if (decksNum != 1) {
+                if (kx == 0) {
                     x_possible = {type: "range", min: 5, max: 9};
                     y_possible = {type: "range", min: 0, max: (10 - decksNum)};
                 }
@@ -166,6 +181,22 @@ function getPossibleValuesOfTheStartCoordinates(kx, decksNum, algorithm) {
             }
             else {
                 x_possible = {type: "range", min: 0, max: 4};
+                y_possible = {type: "range", min: 0, max: 9}; 
+            }
+            break;
+        case 7:
+            if (decksNum != 1) {
+                if (kx == 0) {
+                    x_possible = {type: "range", min: 0, max: 4};
+                    y_possible = {type: "range", min: 0, max: (10 - decksNum)};
+                }
+                else {
+                    x_possible = {type: "range", min: 0, max: (5 - decksNum)};
+                    y_possible = {type: "range", min: 0, max: 9};
+                }
+            }
+            else {
+                x_possible = {type: "range", min: 5, max: 9};
                 y_possible = {type: "range", min: 0, max: 9}; 
             }
             break;
@@ -214,7 +245,7 @@ function chooseAlgorithmBasedOnLevel(chosenLevel) {
     return getRandomNumber({type: "enum", arr: SHIP_LOCATION_ALGORITHMS[chosenLevel]});
 }
 
-chosenAlgorithm = chooseAlgorithmBasedOnLevel("medium");
+chosenAlgorithm = chooseAlgorithmBasedOnLevel("hard");
 
 let enemy = new Enemy(10);
 getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
