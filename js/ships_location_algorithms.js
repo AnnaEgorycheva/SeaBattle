@@ -1,8 +1,43 @@
-let SHIP_LOCATION_ALGORITHMS = {
-    random_ship_location_algoritm: 0,
-    diagonals_ship_location_algorithm: 1,
-    shores_ship_location_algorithm: 2,
-    hard_shores_ship_location_algorithm: 3,
+// let SHIP_LOCATION_ALGORITHMS = {
+//     random_ship_location_algoritm: 0,
+//     diagonals_ship_location_algorithm: 1,
+//     shores_ship_location_algorithm: 2,
+//     hard_shores_ship_location_algorithm: 3,
+//     half_horizontal_field_ship_location_algorithm: 4,
+//     half_vertical_field_ship_location_algorithm: 5,
+// }
+
+const SHIP_LOCATION_ALGORITHMS = {
+    easy: [
+        {
+            name: 'random_ship_location_algoritm', 
+            code: 0
+        }
+    ],
+    medium : [
+        {
+            name: 'diagonals_ship_location_algorithm', 
+            code: 1
+        },
+        {
+            name: 'shores_ship_location_algorithm', 
+            code: 2
+        }
+    ],
+    hard: [
+        {
+            name: 'hard_shores_ship_location_algorithm', 
+            code: 3
+        },
+        {
+            name: 'half_horizontal_field_ship_location_algorithm', 
+            code: 4
+        },
+        {
+            name: 'half_vertical_field_ship_location_algorithm', 
+            code: 5
+        }
+    ],
 }
 let chosenAlgorithm; 
 let field = [...Array(10)].map(() => Array(10).fill(0));
@@ -54,7 +89,7 @@ function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
     }
     for (let i = fromX; i < toX; i++) {
         for (let j = fromY; j < toY; j++) {
-            let currentCell = playerField.getCell(j, i);
+            let currentCell = playerField.getCell(i, j);
             if (currentCell.isOccupied == true)
                 res = false;
         }
@@ -64,7 +99,7 @@ function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
 
 function getPossibleValuesOfTheStartCoordinates(kx, decksNum, algorithm) {
     let x_possible, y_possible;
-    switch(SHIP_LOCATION_ALGORITHMS[algorithm]) {
+    switch(algorithm["code"]) {
         case 0:
         case 1:
             if (kx == 0) {
@@ -102,6 +137,38 @@ function getPossibleValuesOfTheStartCoordinates(kx, decksNum, algorithm) {
                 y_possible = {type: "range", min: 1, max: 8}; 
             }
             break;
+        case 4:
+            if (decksNum != 1) {
+                if (kx == 0) {
+                    x_possible = {type: "range", min: 0, max: 9};
+                    y_possible = {type: "range", min: 0, max: (5 - decksNum)};
+                }
+                else {
+                    x_possible = {type: "range", min: 0, max: (10 - decksNum)};
+                    y_possible = {type: "range", min: 0, max: 4};
+                }
+            }
+            else {
+                x_possible = {type: "range", min: 0, max: 9};
+                y_possible = {type: "range", min: 5, max: 9}; 
+            }
+            break;
+        case 5:
+            if (decksNum != 1) {
+                if (kx == 0) {
+                    x_possible = {type: "range", min: 5, max: 9};
+                    y_possible = {type: "range", min: 0, max: (10 - decksNum)};
+                }
+                else {
+                    x_possible = {type: "range", min: 5, max: (10 - decksNum)};
+                    y_possible = {type: "range", min: 0, max: 9};
+                }
+            }
+            else {
+                x_possible = {type: "range", min: 0, max: 4};
+                y_possible = {type: "range", min: 0, max: 9}; 
+            }
+            break;
     }
     return [x_possible, y_possible];
 }
@@ -134,7 +201,7 @@ function getShipsLocation(playerField, playerShips, algorithm) {
         for (let deck of ship.decks) {
             let x = shipInfo.x + k * shipInfo.kx;
             let y = shipInfo.y + k * shipInfo.ky;
-            let curCell = playerField.getCell(y, x);
+            let curCell = playerField.getCell(x, y);
 
             deck.setPosition(curCell);
             k++;
@@ -143,7 +210,12 @@ function getShipsLocation(playerField, playerShips, algorithm) {
 }
 
 
-chosenAlgorithm = 'hard_shores_ship_location_algorithm';
+function chooseAlgorithmBasedOnLevel(chosenLevel) {
+    return getRandomNumber({type: "enum", arr: SHIP_LOCATION_ALGORITHMS[chosenLevel]});
+}
+
+chosenAlgorithm = chooseAlgorithmBasedOnLevel("medium");
+
 let enemy = new Enemy(10);
 getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
 for(let i = 0; i < 10; i++) {
