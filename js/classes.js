@@ -201,6 +201,24 @@ class Enemy extends Player{
         }
     }
     
+    diagonalsShooting(userField){
+        let j = 0;
+        let k = 9;
+        let cell;
+        for(let i = 0; i<10; i++){
+            cell = userField.getCell(j, i);
+            if(cell.isHited == false){
+                this.#cells.push(cell)
+            }
+            cell = userField.getCell(k, i);
+            if(cell.isHited == false){
+                this.#cells.push(cell)
+            }
+            j = j + 1;
+            k = k - 1;
+        }
+    }
+    
     shoot(x, y, userField){
         const res = userField.toBeShooted(x,y);
         return res;
