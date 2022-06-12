@@ -254,38 +254,83 @@ class Enemy extends Player{
     }
 
     diagonalsShooting2(userField){
-        let k = getRandom(0,2);
+        let k;
+        let rnd = getRandom(0,1);
         let cell;
-        for (let i = 0; i<10; i++){
-            for(let j = k; j<9; j = j + 3){
-                cell = userField.getCell(j,i);
-                if(cell.isHited == false){
-                    this.#cells.push(cell)
+        switch (rnd){
+            case 0:
+                k = getRandom(0,2);
+                for (let i = 0; i<10; i++){
+                    for(let j = k; j<=9; j = j + 3){
+                        cell = userField.getCell(j,i);
+                        if(cell.isHited == false){
+                            this.#cells.push(cell);
+                        }
+                        k = j;
+                    }
+                    k = k - 8;
+                    if (k < 0){
+                        k = k + 3;
+                    }
                 }
-                k = j;
-            }
-            k = k - 8;
-            if (k < 0){
-                k = k + 3;
-            }
+                break;
+            case 1:
+                k = getRandom(7,9);
+                for(let i = 0; i<10; i++){
+                    for(let j = k; j>=0; j = j - 3){
+                        cell = userField.getCell(j,i);
+                        if(cell.isHited == false){
+                            this.#cells.push(cell);
+                        }
+                        k = j;
+                    }
+                    k = k + 8;
+                    if (k > 9){
+                        k = k - 3;
+                    }
+                }
+                break;
         }
+        
     }
 
     diagonalsShooting3(userField){
-        let k = getRandom(0,3);
+        let k;
+        let rnd = getRandom(0,1);
         let cell;
-        for (let i = 0; i<10; i++){
-            for(let j = k; j<9; j = j + 4){
-                cell = userField.getCell(j,i);
-                if(cell.isHited == false){
-                    this.#cells.push(cell)
+        switch(rnd){
+            case 0:
+                k = getRandom(0,3);
+                for (let i = 0; i<10; i++){
+                    for(let j = k; j<=9; j = j + 4){
+                        cell = userField.getCell(j,i);
+                        if(cell.isHited == false){
+                            this.#cells.push(cell);
+                        }
+                        k = j;
+                    }
+                    k = k - 7;
+                    if (k < 0){
+                        k = k + 4;
+                    }
                 }
-                k = j;
-            }
-            k = k - 7;
-            if (k < 0){
-                k = k + 4;
-            }
+                break;
+            case 1:
+                k = getRandom(6,9);
+                for (let i = 0; i<10; i++){
+                    for(let j = k; j>=0; j = j - 4){
+                        cell = userField.getCell(j,i);
+                        if(cell.isHited == false){
+                            this.#cells.push(cell);
+                        }
+                        k = j;
+                    }
+                    k = k + 7;
+                    if (k > 9){
+                        k = k - 4;
+                    }
+                }
+                break;
         }
     }
     
@@ -455,5 +500,4 @@ class Cell{
         //Нужно добавить привязку клетки к конкретной палубе.
     }
 }
-
 
