@@ -1,5 +1,5 @@
 const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured'}
-const algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting', EdgesShooting: 'edges shooting', DiagonalsShooting2: 'diagonal shooting 2', DiagonalsShooting3: 'diagonal shooting 3'};
+const algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting', EdgesShooting: 'edges shooting', DiagonalsShooting2: 'diagonal shooting 2', DiagonalsShooting3: 'diagonal shooting 3', ChessOrder: 'chess order'};
 let level = 1, isGameEnded = false;
 
 function shuffle(array) {
@@ -331,6 +331,24 @@ class Enemy extends Player{
                     }
                 }
                 break;
+        }
+    }
+
+    shootInChessOrder(userField){
+        let k = getRandom(0,1);
+        let cell;
+        for(let i = 0; i<10; i++){
+            for(let j = k; j<10; j = j+2){
+                cell = userField.getCell(j,i);
+                if(cell.isHited == false){
+                    this.#cells.push(cell);
+                }
+                k = j;
+            }
+            k = k - 9;
+            if (k<0){
+                k = k + 2;
+            }
         }
     }
     
