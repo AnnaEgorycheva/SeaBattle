@@ -74,7 +74,7 @@ function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
 	if (toX === undefined || toY === undefined) 
         res =  false;
 
-    switch(SHIP_LOCATION_ALGORITHMS[algorithm]) {
+    switch(algorithm["code"]) {
         case 1:
             let k = 0;
             while (k < decks) {
@@ -220,7 +220,7 @@ function getStartDeckCoord(decksNum, playerField, algorithm) {
 
 	if ( !result ) 
         return getStartDeckCoord(decksNum, playerField, algorithm);
-    return {x, y, kx, ky}; // координаты первой палубы корабля, а также информацию о направлении
+    return {x, y, kx, ky}; // координаты первой палубы корабля, а также информация о направлении
 }
 
 function getShipsLocation(playerField, playerShips, algorithm) {
