@@ -28,8 +28,10 @@ class Player{
     playerField;
     fieldSize;
     ships = [];
+    wasShipHited;
     constructor(fieldSize){
         this.playerField = new Field(fieldSize);
+        this.wasShipHited = false;
         let ship;
         for (let i = 1; i<=4; i++){
             switch (i){
@@ -94,7 +96,6 @@ class Enemy extends Player{
             this.finishShip(userField)
             if (this.#finishingMode){
                 this.randomPlay(userField);
-                this.shoot(this.#cells.shift().x,this.#cells.shift().y);
             }
         }
         else {
@@ -103,6 +104,10 @@ class Enemy extends Player{
             if(res){
                 this.#finishingMode = true;
                 this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
+                this.wasShipHited = true;
+            }
+            else{
+                this.wasShipHited = false;
             }
         }
     }
@@ -118,12 +123,18 @@ class Enemy extends Player{
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x+1, y));
                 }
+                else{
+                    this.wasShipHited = false;
+                }
                    
             }
-            else if(userFieldgetCell(x-1, y).isHited == false && (x - 1)>=0){
+            else if(userField.getCell(x-1, y).isHited == false && (x - 1)>=0){
                 res = this.shoot(x-1, y, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x-1, y));
+                }
+                else{
+                    this.wasShipHited = false;
                 }
                     
             }
@@ -132,12 +143,18 @@ class Enemy extends Player{
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x, y+1));
                 }
+                else{
+                    this.wasShipHited = false;
+                }
                 
             }
             else if(userField.getCell(x, y-1).isHited == false && (y - 1)>=0){
                 res = this.shoot(x, y-1, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x, y-1));
+                }
+                else{
+                    this.wasShipHited = false;
                 }
                     
             }
@@ -152,12 +169,18 @@ class Enemy extends Player{
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x+1, y));
                     }
+                    else{
+                        this.wasShipHited = false;
+                    }
                     break;
                 }
                 else if ((userField.getCell(x-1,y).isHited == false) && (userField.getCell(x+1,y).isHited == true && userField.getCell(x+1,y).isOccupied == true)&& ((x - 1)>=0)){
                     res = this.shoot(x-1, y, userField);
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x-1, y));
+                    }
+                    else{
+                        this.wasShipHited = false;
                     }
                     break;
                 }
@@ -166,12 +189,18 @@ class Enemy extends Player{
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x, y+1));
                     }
+                    else{
+                        this.wasShipHited = false;
+                    }
                     break;
                 }
                 else if ((userField.getCell(x,y-1).isHited == false) && (userField.getCell(x,y+1).isHited == true && userField.getCell(x,y+1).isOccupied == true)&& ((y - 1)>=0)){
                     res = this.shoot(x, y-1, userField);
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x, y-1));
+                    }
+                    else{
+                        this.wasShipHited = false;
                     }
                     break;
                 }
