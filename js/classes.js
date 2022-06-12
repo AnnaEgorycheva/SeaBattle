@@ -272,7 +272,21 @@ class Enemy extends Player{
     }
 
     diagonalsShooting3(userField){
-
+        let k = getRandom(0,3);
+        let cell;
+        for (let i = 0; i<10; i++){
+            for(let j = k; j<9; j = j + 4){
+                cell = userField.getCell(j,i);
+                if(cell.isHited == false){
+                    this.#cells.push(cell)
+                }
+                k = j;
+            }
+            k = k - 7;
+            if (k < 0){
+                k = k + 4;
+            }
+        }
     }
     
     shoot(x, y, userField){
