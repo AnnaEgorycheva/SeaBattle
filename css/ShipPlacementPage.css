@@ -72,5 +72,4 @@ nav {
 
 .deck4, .deck3, .deck2, .deck1 {
     cursor: pointer;
-    transform: rotate(0deg);
 }

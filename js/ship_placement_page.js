@@ -11,9 +11,102 @@ window.onload = function() {
         coordinateMatrix[i] = 52.8 * i + 1;
     }
 
-    // document.getElementsByClassName('deck2')[0].oncontextmenu = function () {
-    //     this.style.transform = `rotate(${this.d = (this.d | 0) + 90}deg)`;
-    // }
+    document.getElementsByClassName('deck4')[0].ondblclick = function () {
+        var width = this.getAttribute('width');
+        if (width != '46') {
+            this.setAttribute('src', '../images/deck4_90.png');
+            this.setAttribute('width', '46');
+            this.setAttribute('height', '197');
+        }
+        else {
+            this.setAttribute('src', '../images/deck4.png');
+            this.setAttribute('width', '197');
+            this.setAttribute('height', '46');
+        }
+        var coord = coordinateCorrection(this);
+        this.style.left = coord[0] +'px';
+        this.style.top = coord[1] +'px';
+    }
+    document.getElementsByClassName('deck3')[0].ondblclick = function () {
+        var width = this.getAttribute('width');
+        if (width != '46') {
+            this.setAttribute('src', '../images/deck3_90.png');
+            this.setAttribute('width', '46');
+            this.setAttribute('height', '147');
+        }
+        else {
+            this.setAttribute('src', '../images/deck3.png');
+            this.setAttribute('width', '147');
+            this.setAttribute('height', '46');
+        }
+        var coord = coordinateCorrection(this);
+        this.style.left = coord[0] +'px';
+        this.style.top = coord[1] +'px';
+    }
+    document.getElementsByClassName('deck3')[1].ondblclick = function () {
+        var width = this.getAttribute('width');
+        if (width != '46') {
+            this.setAttribute('src', '../images/deck3_90.png');
+            this.setAttribute('width', '46');
+            this.setAttribute('height', '147');
+        }
+        else {
+            this.setAttribute('src', '../images/deck3.png');
+            this.setAttribute('width', '147');
+            this.setAttribute('height', '46');
+        }
+        var coord = coordinateCorrection(this);
+        this.style.left = coord[0] +'px';
+        this.style.top = coord[1] +'px';
+    }
+    document.getElementsByClassName('deck2')[0].ondblclick = function () {
+        var width = this.getAttribute('width');
+        if (width != '46') {
+            this.setAttribute('src', '../images/deck2_90.png');
+            this.setAttribute('width', '46');
+            this.setAttribute('height', '93');
+        }
+        else {
+            this.setAttribute('src', '../images/deck2.png');
+            this.setAttribute('width', '93');
+            this.setAttribute('height', '46');
+        }
+        var coord = coordinateCorrection(this);
+        this.style.left = coord[0] +'px';
+        this.style.top = coord[1] +'px';
+    }
+    document.getElementsByClassName('deck2')[1].ondblclick = function () {
+        var width = this.getAttribute('width');
+        if (width != '46') {
+            this.setAttribute('src', '../images/deck2_90.png');
+            this.setAttribute('width', '46');
+            this.setAttribute('height', '93');
+        }
+        else {
+            this.setAttribute('src', '../images/deck2.png');
+            this.setAttribute('width', '93');
+            this.setAttribute('height', '46');
+        }
+        var coord = coordinateCorrection(this);
+        this.style.left = coord[0] +'px';
+        this.style.top = coord[1] +'px';
+    }
+    document.getElementsByClassName('deck2')[2].ondblclick = function () {
+        var width = this.getAttribute('width');
+        if (width != '46') {
+            this.setAttribute('src', '../images/deck2_90.png');
+            this.setAttribute('width', '46');
+            this.setAttribute('height', '93');
+        }
+        else {
+            this.setAttribute('src', '../images/deck2.png');
+            this.setAttribute('width', '93');
+            this.setAttribute('height', '46');
+        }
+        var coord = coordinateCorrection(this);
+        this.style.left = coord[0] +'px';
+        this.style.top = coord[1] +'px';
+    }
 
     canvas = document.getElementsByClassName("playing-field"), 
     context = canvas[0].getContext("2d");
@@ -24,7 +117,7 @@ window.onload = function() {
     };
 
     let isDragging = false;
-    document.addEventListener('dblclick', function(event) {
+    document.addEventListener('mousedown', function(event) {
 
         let dragElement = event.target.closest('.deckShip');
 
@@ -139,6 +232,7 @@ window.onload = function() {
         var x = parseInt(element.style.left);
         var y = parseInt(element.style.top);
         var nameClass = element.className[20];
+        var width = element.width;
         var indentX = (window.innerWidth - 528) / 2;
         var indentY = 94;
         var sizeField = 528;
@@ -146,20 +240,23 @@ window.onload = function() {
             return [coordinateMatrix[0] + indentX, coordinateMatrix[0] + indentY];
         }
         else if (x > indentX + sizeField && y < indentY) {
-            if (nameClass === "1") {
-                return [coordinateMatrix[9] + indentX, coordinateMatrix[0] + indentY];
-            }
-            else if (nameClass === "2") {
+            if (nameClass === "2" && width == '93') {
                 return [coordinateMatrix[8] + indentX, coordinateMatrix[0] + indentY];
             }
-            else if (nameClass === "3") {
+            else if (nameClass === "3" && width == '147') {
                 return [coordinateMatrix[7] + indentX, coordinateMatrix[0] + indentY];
             }
-            else if (nameClass === "4") {
+            else if (nameClass === "4" && width == '197') {
                 return [coordinateMatrix[6] + indentX, coordinateMatrix[0] + indentY];
-            }            
+            }     
+            else {
+                return [coordinateMatrix[9] + indentX, coordinateMatrix[0] + indentY];
+            }       
         }
         else if (y < indentY) {
+            if (width == '46') {
+                nameClass = '1';
+            }
             for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
                 if (x < coordinateMatrix[i + 1] + indentX) {
                     return [coordinateMatrix[i] + indentX, coordinateMatrix[0] + indentY];
@@ -167,46 +264,124 @@ window.onload = function() {
             }
             return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[0] + indentY];
         }
-        else if (x < indentX && y > indentY + sizeField) {
-            return [coordinateMatrix[0] + indentX, coordinateMatrix[9] + indentY];
+        else if (x < indentX && y > indentY + sizeField) {   
+            if (width == '46') {
+                if (nameClass == '2') {
+                    return [coordinateMatrix[0] + indentX, coordinateMatrix[8] + indentY];
+                }
+                else if (nameClass == '3') {
+                    return [coordinateMatrix[0] + indentX, coordinateMatrix[7] + indentY];
+                }
+                else if (nameClass == '4') {
+                    return [coordinateMatrix[0] + indentX, coordinateMatrix[6] + indentY];
+                }  
+                else {
+                    return [coordinateMatrix[0] + indentX, coordinateMatrix[9] + indentY];
+                }   
+            } 
+            else {
+                return [coordinateMatrix[0] + indentX, coordinateMatrix[9] + indentY];
+            }
         }
         else if (x > indentX + sizeField && y > indentY + sizeField) {
-            if (nameClass === "1") {
-                return [coordinateMatrix[9] + indentX, coordinateMatrix[9] + indentY];
-            }
-            else if (nameClass === "2") {
-                return [coordinateMatrix[8] + indentX, coordinateMatrix[9] + indentY];
-            }
-            else if (nameClass === "3") {
-                return [coordinateMatrix[7] + indentX, coordinateMatrix[9] + indentY];
-            }
-            else if (nameClass === "4") {
-                return [coordinateMatrix[6] + indentX, coordinateMatrix[9] + indentY];
-            }            
+            if (width == '46') {
+                if (nameClass == '2') {
+                    return [coordinateMatrix[9] + indentX, coordinateMatrix[8] + indentY];
+                }
+                else if (nameClass == '3') {
+                    return [coordinateMatrix[9] + indentX, coordinateMatrix[7] + indentY];
+                }
+                else if (nameClass == '4') {
+                    return [coordinateMatrix[9] + indentX, coordinateMatrix[6] + indentY];
+                } 
+                else {
+                    return [coordinateMatrix[9] + indentX, coordinateMatrix[9] + indentY];
+                }    
+            } 
+            else {
+                if (nameClass == '2') {
+                    return [coordinateMatrix[8] + indentX, coordinateMatrix[9] + indentY];
+                }
+                else if (nameClass == '3') {
+                    return [coordinateMatrix[7] + indentX, coordinateMatrix[9] + indentY];
+                }
+                else if (nameClass == '4') {
+                    return [coordinateMatrix[6] + indentX, coordinateMatrix[9] + indentY];
+                }   
+            }         
         }
         else if (y > indentY + sizeField) {
-            for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
-                if (x < coordinateMatrix[i + 1] + indentX) {
-                    return [coordinateMatrix[i] + indentX, coordinateMatrix[9] + indentY];
+            if (width == '46') {
+                if (nameClass == "2") {
+                    nameClass = '1';
+                    for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
+                        if (x < coordinateMatrix[i + 1] + indentX) {
+                            return [coordinateMatrix[i] + indentX, coordinateMatrix[8] + indentY];
+                        }
+                    }
+                    return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[8] + indentY];
+                }
+                else if (nameClass == '3') {
+                    nameClass = '1';
+                    for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
+                        if (x < coordinateMatrix[i + 1] + indentX) {
+                            return [coordinateMatrix[i] + indentX, coordinateMatrix[7] + indentY];
+                        }
+                    }
+                    return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[7] + indentY];
+                }
+                else if (nameClass == '4') {
+                    nameClass = '1';
+                    for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
+                        if (x < coordinateMatrix[i + 1] + indentX) {
+                            return [coordinateMatrix[i] + indentX, coordinateMatrix[6] + indentY];
+                        }
+                    }
+                    return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[6] + indentY];
+                }
+                else {
+                    for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
+                        if (x < coordinateMatrix[i + 1] + indentX) {
+                            return [coordinateMatrix[i] + indentX, coordinateMatrix[9] + indentY];
+                        }
+                    }
+                    return [coordinateMatrix[9] + indentX, coordinateMatrix[9] + indentY];
                 }
             }
-            return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[9] + indentY];
+            else {
+                for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
+                    if (x < coordinateMatrix[i + 1] + indentX) {
+                        return [coordinateMatrix[i] + indentX, coordinateMatrix[9] + indentY];
+                    }
+                }
+                return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[9] + indentY];
+            
+            }
         }
         else if (x < indentX) {
-            for (var i = 0; i < sizeCoordinateMatrix - 1; i++) {
+            var heightShip = 1;
+            if (width == '46') {
+                heightShip = parseInt(nameClass);
+            }
+            for (var i = 0; i < sizeCoordinateMatrix - heightShip; i++) {
                 if (y < coordinateMatrix[i + 1] + indentY) {
                     return [coordinateMatrix[0] + indentX, coordinateMatrix[i] + indentY];
                 }
             }
-            return [coordinateMatrix[0] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+            return [coordinateMatrix[0] + indentX, coordinateMatrix[sizeCoordinateMatrix - heightShip] + indentY];
         }
         else if (x > indentX + sizeField) {
+            if (width == '46') {
+                for (var i = 0; i < sizeCoordinateMatrix - nameClass; i++) {
+                    if (y < coordinateMatrix[i + 1] + indentY) {
+                        return [coordinateMatrix[9] + indentX, coordinateMatrix[i] + indentY]; 
+                    }
+                }
+                return [coordinateMatrix[9] + indentX, coordinateMatrix[sizeCoordinateMatrix - nameClass] + indentY];
+            }
             for (var i = 0; i < sizeCoordinateMatrix - 1; i++) {
                 if (y < coordinateMatrix[i + 1] + indentY) {
-                    if (nameClass === "1") {
-                        return [coordinateMatrix[9] + indentX, coordinateMatrix[i] + indentY];
-                    }
-                    else if (nameClass === "2") {
+                    if (nameClass === "2") {
                         return [coordinateMatrix[8] + indentX, coordinateMatrix[i] + indentY];
                     }
                     else if (nameClass === "3") {
@@ -231,23 +406,39 @@ window.onload = function() {
             }   
         }
         else {
+            var heightShip = 1;
+            if (width == '46') {
+                if (nameClass == '2') {
+                    heightShip = 2;
+                } 
+                else if (nameClass == '3') {
+                    heightShip = 3;
+                }
+                else if (nameClass == '4') {
+                    heightShip = 4;
+                }
+                else {
+                    heightShip = 1;
+                }
+                nameClass = '1';
+            }
             for (var i = 0; i < sizeCoordinateMatrix - parseInt(nameClass); i++) {
                 if (x < coordinateMatrix[i + 1] + indentX) {
-                    for (var j = 0; j < sizeCoordinateMatrix - 1; j++) {
+                    for (var j = 0; j < sizeCoordinateMatrix - heightShip; j++) {
                         if (y < coordinateMatrix[j + 1] + indentY) {
                             return [coordinateMatrix[i] + indentX, coordinateMatrix[j] + indentY];
                         }
                     }
-                    return [coordinateMatrix[i] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+                    return [coordinateMatrix[i] + indentX, coordinateMatrix[sizeCoordinateMatrix - heightShip] + indentY];
                     
                 }
             }
-            for (var j = 0; j < sizeCoordinateMatrix - 1; j++) {
+            for (var j = 0; j < sizeCoordinateMatrix - heightShip; j++) {
                 if (y < coordinateMatrix[j + 1] + indentY) {
                     return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[j] + indentY];
                 }
             }
-            return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[sizeCoordinateMatrix - 1] + indentY];
+            return [coordinateMatrix[sizeCoordinateMatrix - parseInt(nameClass)] + indentX, coordinateMatrix[sizeCoordinateMatrix - heightShip] + indentY];
         }
     }
 }
