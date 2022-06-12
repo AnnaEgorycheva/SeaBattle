@@ -1,5 +1,5 @@
 const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured'}
-const algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting'};
+const algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting', EdgesShooting: 'edges shooting'};
 let level = 1, isGameEnded = false;
 
 function shuffle(array) {
@@ -224,6 +224,27 @@ class Enemy extends Player{
             j = j + 1;
             k = k - 1;
         }
+    }
+
+    edgesShooting(userField){
+        let cell;
+        for(let i = 0; i<10; i = i+9){
+            for(let j = 0; j<10; j=j+2){
+                cell = userField.getCell(j,i);
+                if(cell.isHited == false){
+                    this.#cells.push(cell)
+                }
+            }
+        }
+        for(let i = 0; i<10; i = i+9){
+            for(let j = 0; j<10; j=j+2){
+                cell = userField.getCell(i,j);
+                if(cell.isHited == false){
+                    this.#cells.push(cell)
+                }
+            }
+        }
+
     }
     
     shoot(x, y, userField){
