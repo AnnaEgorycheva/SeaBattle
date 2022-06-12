@@ -1,7 +1,8 @@
 let SHIP_LOCATION_ALGORITHMS = {
     random_ship_location_algoritm: 0,
     diagonals_ship_location_algorithm: 1,
-    shores_ship_location_algorithm: 2
+    shores_ship_location_algorithm: 2,
+    hard_shores_ship_location_algorithm: 3,
 }
 let chosenAlgorithm; 
 let field = [...Array(10)].map(() => Array(10).fill(0));
@@ -92,6 +93,22 @@ function getStartDeckCoord(decksNum, playerField, algorithm) {
                 y_possible = {type: "enum", arr: [0, 9]};
             }
             break;
+        case 3:
+            if (decksNum != 1) {
+                if (kx == 0) {
+                    x_possible = {type: "enum", arr: [0, 9]};
+                    y_possible = {type: "range", min: 0, max: (10 - decksNum)};
+                }
+                else {
+                    x_possible = {type: "range", min: 0, max: (10 - decksNum)};
+                    y_possible = {type: "enum", arr: [0, 9]};
+                }
+            }
+            else {
+                x_possible = {type: "range", min: 1, max: 8};
+                y_possible = {type: "range", min: 1, max: 8}; 
+            }
+            break;
     }
 
     x = getRandomNumber(x_possible);
@@ -122,7 +139,7 @@ function getShipsLocation(playerField, playerShips, algorithm) {
 }
 
 
-chosenAlgorithm = 'shores_ship_location_algorithm';
+chosenAlgorithm = 'hard_shores_ship_location_algorithm';
 let enemy = new Enemy(10);
 getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
 for(let i = 0; i<10;i++){
