@@ -96,7 +96,6 @@ class Enemy extends Player{
             this.finishShip(userField)
             if (this.#finishingMode){
                 this.randomPlay(userField);
-                this.shoot(this.#cells.shift().x,this.#cells.shift().y);
             }
         }
         else {
@@ -106,6 +105,9 @@ class Enemy extends Player{
                 this.#finishingMode = true;
                 this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
                 this.wasShipHited = true;
+            }
+            else{
+                this.wasShipHited = false;
             }
         }
     }
