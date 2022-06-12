@@ -121,12 +121,18 @@ class Enemy extends Player{
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x+1, y));
                 }
+                else{
+                    this.wasShipHited = false;
+                }
                    
             }
             else if(userField.getCell(x-1, y).isHited == false && (x - 1)>=0){
                 res = this.shoot(x-1, y, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x-1, y));
+                }
+                else{
+                    this.wasShipHited = false;
                 }
                     
             }
@@ -135,12 +141,18 @@ class Enemy extends Player{
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x, y+1));
                 }
+                else{
+                    this.wasShipHited = false;
+                }
                 
             }
             else if(userField.getCell(x, y-1).isHited == false && (y - 1)>=0){
                 res = this.shoot(x, y-1, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x, y-1));
+                }
+                else{
+                    this.wasShipHited = false;
                 }
                     
             }
@@ -155,12 +167,18 @@ class Enemy extends Player{
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x+1, y));
                     }
+                    else{
+                        this.wasShipHited = false;
+                    }
                     break;
                 }
                 else if ((userField.getCell(x-1,y).isHited == false) && (userField.getCell(x+1,y).isHited == true && userField.getCell(x+1,y).isOccupied == true)&& ((x - 1)>=0)){
                     res = this.shoot(x-1, y, userField);
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x-1, y));
+                    }
+                    else{
+                        this.wasShipHited = false;
                     }
                     break;
                 }
@@ -169,12 +187,18 @@ class Enemy extends Player{
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x, y+1));
                     }
+                    else{
+                        this.wasShipHited = false;
+                    }
                     break;
                 }
                 else if ((userField.getCell(x,y-1).isHited == false) && (userField.getCell(x,y+1).isHited == true && userField.getCell(x,y+1).isOccupied == true)&& ((y - 1)>=0)){
                     res = this.shoot(x, y-1, userField);
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x, y-1));
+                    }
+                    else{
+                        this.wasShipHited = false;
                     }
                     break;
                 }
