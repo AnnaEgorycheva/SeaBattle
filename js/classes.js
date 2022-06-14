@@ -225,8 +225,12 @@ class Enemy extends Player{
     }
 
     startGame(userField){
-        this.#chosenAlgorythm = algorythms.RandomGame;
-        this.randomPlay(userField);
+        this.chooseFirstAlgorithm(userField);
+        this.toPlay(userField);
+    }
+
+    chooseFirstAlgorithm(userField){
+
     }
 
     randomPlay(userField){
