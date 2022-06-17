@@ -23,6 +23,9 @@ function saveUserSettings() {
     localStorage.setItem('level', level);
     localStorage.setItem('fieldSize', fieldSize);
 
+    let enemyFieldInfo = getShipsLocation(chooseAlgorithmBasedOnLevel(level));
+    localStorage.setItem('enemyFieldInfo', JSON.stringify(enemyFieldInfo));
+
     window.location.href = 'ShipPlacementPage.html';
 }
 

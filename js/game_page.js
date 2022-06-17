@@ -1,11 +1,7 @@
 let user, enemy;
 function createPlayers() {
     user = convertLightShipInfoToPlayerInfo(JSON.parse(localStorage.getItem('userFieldInfo')), 'user');
-    enemy = new Enemy(10);
-    getShipsLocation(enemy.playerField, enemy.ships, chooseAlgorithmBasedOnLevel(localStorage.getItem('level')));
-    console.log(user);
-    console.log(enemy);
-
+    enemy = convertLightShipInfoToPlayerInfo(JSON.parse(localStorage.getItem('enemyFieldInfo')), 'enemy');
 }
 
 window.onload = function() {

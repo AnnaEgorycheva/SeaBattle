@@ -1,11 +1,6 @@
 function fillUserField() {
-    let user = new User(10);
-    getShipsLocation(user.playerField, user.ships, chooseAlgorithmBasedOnLevel('easy'));
-
-    let userShipsPositions = convertPlayerInfoToLightShipInfo(user);
-    localStorage.setItem('userFieldInfo', JSON.stringify(userShipsPositions));
-
-    // convertLightShipInfoToPlayerInfo(userShipsPositions, 'user')
+    let userFieldInfo = getShipsLocation(chooseAlgorithmBasedOnLevel('easy'));
+    localStorage.setItem('userFieldInfo', JSON.stringify(userFieldInfo));
 }
 
 window.onload = function() {
