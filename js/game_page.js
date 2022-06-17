@@ -5,15 +5,16 @@ function createPlayers() {
     enemy.startGame(user.playerField);
 }
 
-
-
 window.onload = function() {
     createPlayers();
 
     var sizeCoordinateMatrix = 10;
     var coordinateMatrix = new Array(sizeCoordinateMatrix);
-    for (var i = 0; i < sizeCoordinateMatrix; i++) {
-        coordinateMatrix[i] = 52.8 * i;
+    for (var i = 0; i < 3; i++) {
+        coordinateMatrix[i] = 52.8 * i + 2;
+    }
+    for (var i = 3; i < sizeCoordinateMatrix; i++) {
+        coordinateMatrix[i] = 52.8 * i - 2;
     }
 
     var canvasOpponent = document.getElementsByClassName("opponent-playing-field");
@@ -53,7 +54,6 @@ window.onload = function() {
     }
 
     play();
-
     function userMove() {
         document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "normal";
         document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "bold";
@@ -61,7 +61,7 @@ window.onload = function() {
             var loc = windowToCanvas(canvasOpponent, e.clientX, e.clientY);
             var x = identifyCell(loc.x);
             var y = identifyCell(loc.y);
-            result = user.shoot(x,y,enemy.playerField)
+            var result = user.shoot(x,y,enemy.playerField)
             if (result) {
                 hit(x, y);
             } else {
