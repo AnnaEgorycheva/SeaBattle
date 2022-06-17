@@ -86,16 +86,18 @@ class Enemy extends Player{
     #finishingCells = [];
     #currentShip
     #didEnemyHitDeck = false;
+    #wasAlgoritmEnded;
     constructor(fieldSize){
         super(fieldSize,level);
-        this.#finishingMode = false;;
+        this.#finishingMode = false;
+        this.#wasAlgoritmEnded = false;
     }
     
     toPlay(userField){
         if (this.#finishingMode){
             this.finishShip(userField)
             if (this.#finishingMode){
-                this.randomPlay(userField);
+                this.changeAlgorythm(userField);
             }
         }
         else {
@@ -110,11 +112,15 @@ class Enemy extends Player{
                 this.wasShipHited = false;
             }
         }
+        if(this.#cells.length == 0){
+            this.#wasAlgoritmEnded = true;
+            this.changeAlgorythm(userField)
+        }
     }
 
     finishShip(userField){
         let x, y, res;
-        if(this.#currentShip.length() == 1){
+        if(this.#currentShip.length == 1){
             x = this.#finishingCells[0].x;
             y = this.#finishingCells[0].y;
             if(userField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
@@ -208,7 +214,7 @@ class Enemy extends Player{
     }
 
     changeAlgorythm(userField){
-        if (level == 1){
+        if (level == 'light'){
             this.#chosenAlgorythm = algorythms.RandomGame;
             this.randomPlay(userField);
         }
