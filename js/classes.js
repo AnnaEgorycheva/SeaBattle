@@ -88,7 +88,6 @@ class Enemy extends Player{
     #finishingMode;
     #finishingCells = [];
     #finishedShips = []
-    #currentShip;
     #didEnemyHitDeck = false;
     #wasAlgoritmEnded;
     #level;
@@ -288,7 +287,6 @@ class Enemy extends Player{
         switch(this.#level){
             case 'easy':
                 this.#chosenAlgorythm =  algorythms.RandomGame;
-                //console.log(this.#chosenAlgorythm);
                 this.randomPlay(userField);
                 break;
             case 'medium':
@@ -518,13 +516,13 @@ class Enemy extends Player{
 class Ship{
     shipStatus;
     decks;
-    #numOfDecks;
-    #direction;
+    numOfDecks;
+    direction;
     constructor(numOfDecks){
-        this.#numOfDecks = numOfDecks;
+        this.numOfDecks = numOfDecks;
         this.shipStatus = shipStatus.NotKilled;
         this.decks = [];
-        this.#direction = '';
+        this.direction = '';
         for (let i = 0; i < numOfDecks; i++){
             this.decks[i] = new Deck(this);
         }
@@ -543,7 +541,7 @@ class Ship{
     //     }
     // }
 
-    get numOfDecks(){
+   /* get numOfDecks(){
         return this.#numOfDecks;
     }
 
@@ -553,7 +551,7 @@ class Ship{
 
     set direction(val){
         this.#direction = val;
-    }
+    }*/
 
     getNotKilledDecks(){
         const decks = [];
@@ -568,30 +566,30 @@ class Ship{
 }
 
 class Deck{
-    #isKilled;
-    #position;
+    isKilled;
+    position;
     ship;
     constructor(ship){
-        this.#isKilled = false;
+        this.isKilled = false;
         this.ship = ship;
     }
 
-    get isKilled(){
+    /*get isKilled(){
         return this.#isKilled;
     }
     set isKilled(val){
         if(typeof(val)==Boolean){
             this.#isKilled = val;
         }
-    }
+    }*/
 
     //get ship(){
     //    return this.#ship;
     //}
 
-    get position(){
+    /*get position(){
         return this.#position
-    }
+    }*/
 
     setPosition(cell){
         cell.placeDeck(this);
@@ -661,23 +659,23 @@ class Cell{
     x;
     y;
     isHited;
-    #isOccupied;
+    isOccupied;
     deck;
     constructor(x, y){
         this.x = x
         this.y = y
         this.isHited = false
-        this.#isOccupied = false
+        this.isOccupied = false
     }
     
-    get isOccupied(){
+    /*get isOccupied(){
         return this.#isOccupied;
     }
     set isOccupied(val){
         if(typeof(val)==Boolean){
-            this.#isOccupied = val;
+            this.isOccupied = val;
         }
-    }
+    }*/
 
     // get deck(){
     //     return this.#deck;
