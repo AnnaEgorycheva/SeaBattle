@@ -84,6 +84,7 @@ class Enemy extends Player{
     #chosenAlgorythm;
     #finishingMode;
     #finishingCells = [];
+    #finishedShips = []
     #currentShip;
     #didEnemyHitDeck = false;
     #wasAlgoritmEnded;
@@ -102,11 +103,23 @@ class Enemy extends Player{
         }
         else {
             let cell = this.#cells.shift();
+            let cellWithDeck;
+            let ship;
             let res = this.shoot(cell.x,cell.y, userField);
             if(res){
-                this.#finishingMode = true;
-                this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
-                this.wasShipHited = true;
+                cellWithDeck = userField.getCell(this.#cells.shift().x,this.#cells.shift().y);
+                ship = cellWithDeck.ship;
+                if(ship.decks.length > 1){
+                    this.#finishingMode = true;
+                    this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
+                    this.wasShipHited = true;
+                }
+                else{
+                    this.wasShipHited = true;
+                    this.changeAlgorythm(userField);
+                    this.#finishedShips.push(1);
+                }
+                
             }
             else{
                 this.wasShipHited = false;
@@ -210,6 +223,7 @@ class Enemy extends Player{
         }
         if (this.#finishingCells[0].deck.ship.shipStatus = shipStatus.Killed){
             this.#finishingMode = false;
+            this.#finishedShips.push(this.#finishingCells.length);
             this.#finishingCells = [];
         }
     }
@@ -235,10 +249,25 @@ class Enemy extends Player{
                         this.shootCenter(userField);
                         break;
                     case algorythms.DiagonalsShooting2:
+                        for(let i = 0; i<this.#finishedShips.length; i++){
+                            if(this.#finishedShips[i] == 3){
+                                this.#wasAlgoritmEnded = true;
+                                break;
+                            }
+                        }
                         break;
                     case algorythms.DiagonalsShooting3:
+                        for(let i = 0; i<this.#finishedShips.length; i++){
+                            if(this.#finishedShips[i] == 4){
+                                this.#wasAlgoritmEnded = true;
+                                break;
+                            }
+                        }
                         break;
                 }
+            }
+            else{
+
             }
         }
     }
