@@ -115,8 +115,10 @@ class Enemy extends Player{
             let cell = this.#cells.shift();
             let cellWithDeck;
             let ship;
+            console.log(cell);
             let res = this.shoot(cell.x,cell.y, userField);
             if(res){
+                this.#cells = [];
                 cellWithDeck = userField.getCell(this.#cells.shift().x,this.#cells.shift().y);
                 let num = cellWithDeck.numOfDecksAtCell;
                 if(num > 1){
@@ -140,6 +142,7 @@ class Enemy extends Player{
             this.#wasAlgoritmEnded = true;
             this.changeAlgorythm(userField);
         }
+        console.log(this.#cells.length)
         return resultCell;
     }
 
@@ -149,7 +152,7 @@ class Enemy extends Player{
         if(this.#finishingCells.length == 1){
             x = this.#finishingCells[0].x;
             y = this.#finishingCells[0].y;
-            if(userField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
+            if((x + 1)<this.fieldSize && userField.getCell(x+1, y).isHited == false){
                 res = this.shoot(x+1, y, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x+1, y));
@@ -159,7 +162,7 @@ class Enemy extends Player{
                 }
                 resultCell = userField.getCell(x+1, y);
             }
-            else if(userField.getCell(x-1, y).isHited == false && (x - 1)>=0){
+            else if((x - 1)>=0 && userField.getCell(x-1, y).isHited == false){
                 res = this.shoot(x-1, y, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x-1, y));
@@ -169,7 +172,7 @@ class Enemy extends Player{
                 }
                 resultCell = userField.getCell(x-1, y);
             }
-            else if(userField.getCell(x, y+1).isHited == false && (y + 1)<this.fieldSize){
+            else if((y + 1)<this.fieldSize && userField.getCell(x, y+1).isHited == false){
                 res = this.shoot(x, y+1, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x, y+1));
@@ -179,7 +182,7 @@ class Enemy extends Player{
                 }
                 resultCell = userField.getCell(x, y+1);
             }
-            else if(userField.getCell(x, y-1).isHited == false && (y - 1)>=0){
+            else if((y - 1)>=0 && userField.getCell(x, y-1).isHited == false){
                 res = this.shoot(x, y-1, userField);
                 if(res ==true){
                     this.#finishingCells.push(userField.getCell(x, y-1));
@@ -191,10 +194,10 @@ class Enemy extends Player{
             }
         }
         else{
-            for (let i = 0; i<this.#finishingCells.length(); i++){
+            for (let i = 0; i<this.#finishingCells.length; i++){
                 x = this.#finishingCells[i].x;
                 y = this.#finishingCells[i].y;
-                if ((userField.getCell(x+1,y).isHited == false) && (userField.getCell(x-1,y).isHited == true && userField.getCell(x-1,y).isOccupied == true)&& ((x + 1)<this.fieldSize)){
+                if (((x + 1)<this.fieldSize)&&(userField.getCell(x+1,y).isHited == false) && (userField.getCell(x-1,y).isHited == true && userField.getCell(x-1,y).isOccupied == true)){
                     res = this.shoot(x+1, y, userField);
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x+1, y));
@@ -205,7 +208,7 @@ class Enemy extends Player{
                     resultCell = userField.getCell(x+1, y);
                     break;
                 }
-                else if ((userField.getCell(x-1,y).isHited == false) && (userField.getCell(x+1,y).isHited == true && userField.getCell(x+1,y).isOccupied == true)&& ((x - 1)>=0)){
+                else if (((x - 1)>=0)&&(userField.getCell(x-1,y).isHited == false) && (userField.getCell(x+1,y).isHited == true && userField.getCell(x+1,y).isOccupied == true)){
                     res = this.shoot(x-1, y, userField);
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x-1, y));
@@ -216,7 +219,7 @@ class Enemy extends Player{
                     resultCell = userField.getCell(x-1, y);
                     break;
                 }
-                else if ((userField.getCell(x,y+1).isHited == false) && (userField.getCell(x,y-1).isHited == true && userField.getCell(x,y-1).isOccupied == true)&& ((y + 1)<this.fieldSize)){
+                else if (((y + 1)<this.fieldSize)&&(userField.getCell(x,y+1).isHited == false) && (userField.getCell(x,y-1).isHited == true && userField.getCell(x,y-1).isOccupied == true)){
                     res = this.shoot(x, y+1, userField);
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x, y+1));
@@ -227,7 +230,7 @@ class Enemy extends Player{
                     resultCell = userField.getCell(x, y+1);
                     break;
                 }
-                else if ((userField.getCell(x,y-1).isHited == false) && (userField.getCell(x,y+1).isHited == true && userField.getCell(x,y+1).isOccupied == true)&& ((y - 1)>=0)){
+                else if (((y - 1)>=0)&&(userField.getCell(x,y-1).isHited == false) && (userField.getCell(x,y+1).isHited == true && userField.getCell(x,y+1).isOccupied == true)){
                     res = this.shoot(x, y-1, userField);
                     if(res ==true){
                         this.#finishingCells.push(userField.getCell(x, y-1));
@@ -252,10 +255,10 @@ class Enemy extends Player{
     }
 
     changeAlgorythm(userField){
-        if (this.#level == 'easy'){
+        //if (this.#level == 'easy'){
             this.#chosenAlgorythm = algorythms.RandomGame;
             this.randomPlay(userField);
-        }
+       /* }
         else{
             if(!this.#wasAlgoritmEnded){
                 switch(this.#chosenAlgorythm){
@@ -292,7 +295,7 @@ class Enemy extends Player{
             else{
 
             }
-        }
+        }*/
     }
 
     startGame(userField){
