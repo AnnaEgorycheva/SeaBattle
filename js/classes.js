@@ -114,16 +114,16 @@ class Enemy extends Player{
             if(res){
                 cellWithDeck = userField.getCell(this.#cells.shift().x,this.#cells.shift().y);
                 ship = cellWithDeck.ship;
-                if(ship.decks.length > 1){
+                //if(ship.numOfDecks > 1){
                     this.#finishingMode = true;
                     this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
                     this.wasShipHited = true;
-                }
-                else{
-                    this.wasShipHited = true;
-                    this.changeAlgorythm(userField);
-                    this.#finishedShips.push(1);
-                }
+                //}
+                //else{
+                //    this.wasShipHited = true;
+                //    this.changeAlgorythm(userField);
+                //    this.#finishedShips.push(1);
+                //}
                 
             }
             else{
@@ -227,7 +227,8 @@ class Enemy extends Player{
 
 
         }
-        if (this.#finishingCells[0].deck.ship.shipStatus = shipStatus.Killed){
+        let deck = this.#finishingCells[0].deck;
+        if (deck.ship.shipStatus = shipStatus.Killed){
             this.#finishingMode = false;
             this.#finishedShips.push(this.#finishingCells.length);
             this.#finishingCells = [];
@@ -287,7 +288,8 @@ class Enemy extends Player{
         switch(this.#level){
             case 'easy':
                 this.#chosenAlgorythm =  algorythms.RandomGame;
-                console.log(this.#chosenAlgorythm);
+                //console.log(this.#chosenAlgorythm);
+                this.randomPlay(userField);
                 break;
             case 'medium':
                 rnd = getRandom(1,6);
@@ -495,7 +497,7 @@ class Enemy extends Player{
     }
     
     shoot(x, y, userField){
-        const res = userField.toBeShooted(x,y);
+        let res = userField.toBeShooted(x,y);
         return res;
     }
 
@@ -514,31 +516,32 @@ class Enemy extends Player{
 }
 
 class Ship{
-    #shipStatus;
-    #decks;
+    shipStatus;
+    decks;
     #numOfDecks;
     #direction;
     constructor(numOfDecks){
         this.#numOfDecks = numOfDecks;
-        this.#decks = [];
+        this.shipStatus = shipStatus.NotKilled;
+        this.decks = [];
         this.#direction = '';
         for (let i = 0; i < numOfDecks; i++){
-            this.#decks[i] = new Deck(this);
+            this.decks[i] = new Deck(this);
         }
     }
 
-    get decks(){
-        return this.#decks;
-    }
+    // get decks(){
+     //   return this.#decks;
+    //}
 
-    get shipStatus(){
-        return this.#shipStatus;
-    }
-    set shipStatus(val){
-        if (val == shipStatus.Injured || val == shipStatus.Killed || val == shipStatus.NotKilled){
-            this.#shipStatus = val;
-        }
-    }
+    // get shipStatus(){
+    //     return this.#shipStatus;
+    // }
+    // set shipStatus(val){
+    //     if (val == shipStatus.Injured || val == shipStatus.Killed || val == shipStatus.NotKilled){
+    //         this.#shipStatus = val;
+    //     }
+    // }
 
     get numOfDecks(){
         return this.#numOfDecks;
@@ -554,9 +557,9 @@ class Ship{
 
     getNotKilledDecks(){
         const decks = [];
-        for (let i = 0; i < this.#decks.length(); i++){
-            if(this.#decks[i].isKilled==false){
-                decks.push(this.#decks[i]);
+        for (let i = 0; i < this.decks.length(); i++){
+            if(this.decks[i].isKilled==false){
+                decks.push(this.decks[i]);
             }
         }
         return decks;
@@ -567,10 +570,10 @@ class Ship{
 class Deck{
     #isKilled;
     #position;
-    #ship;
+    ship;
     constructor(ship){
         this.#isKilled = false;
-        this.#ship = ship;
+        this.ship = ship;
     }
 
     get isKilled(){
@@ -582,9 +585,9 @@ class Deck{
         }
     }
 
-    get ship(){
-        return this.#ship;
-    }
+    //get ship(){
+    //    return this.#ship;
+    //}
 
     get position(){
         return this.#position
@@ -659,7 +662,7 @@ class Cell{
     y;
     isHited;
     #isOccupied;
-    #deck;
+    deck;
     constructor(x, y){
         this.x = x
         this.y = y
@@ -676,13 +679,13 @@ class Cell{
         }
     }
 
-    get deck(){
-        return this.#deck;
-    }
+    // get deck(){
+    //     return this.#deck;
+    // }
 
     placeDeck(deck){
         this.#isOccupied = true;
-        this.#deck = deck;
+        this.deck = deck;
         //Нужно добавить привязку клетки к конкретной палубе.
     }
 } 

@@ -39,7 +39,7 @@ window.onload = function() {
         while(true){
             userMove();
             do{
-                cell = enemy.toPlay();
+                cell = enemy.toPlay(user.playerField);
                 if(enemy.wasShipHitted){
                     hitEnemy(cell.x, cell.y);
                 }
