@@ -1,3 +1,16 @@
+class LightShip {
+    decksNum;
+    direction;
+    x;
+    y;
+    constructor(decksNum, direction){
+        this.decksNum = decksNum;
+        this.direction = direction;
+        this.x = [];
+        this.y = [];
+    }
+}
+
 const SHIP_LOCATION_ALGORITHMS = {
     easy: [
         {
@@ -252,7 +265,6 @@ function getShipsLocation(algorithm) {
 
     return allLightShips;
 }
-
 
 function chooseAlgorithmBasedOnLevel(chosenLevel) {
     return getRandomValue({type: "enum", arr: SHIP_LOCATION_ALGORITHMS[chosenLevel]});

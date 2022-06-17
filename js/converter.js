@@ -1,16 +1,3 @@
-class LightShip {
-    decksNum;
-    direction;
-    x;
-    y;
-    constructor(decksNum, direction){
-        this.decksNum = decksNum;
-        this.direction = direction;
-        this.x = [];
-        this.y = [];
-    }
-}
-
 function convertLightShipInfoToPlayerInfo(allLightShips, role) {
     let player = role == 'user' ? new User(10) : new Enemy(10);
     for(let i = 0; i < 10; i++) {
