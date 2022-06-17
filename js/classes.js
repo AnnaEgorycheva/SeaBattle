@@ -257,13 +257,16 @@ class Enemy extends Player{
     }
 
     changeAlgorythm(userField){
-        //if (this.#level == 'easy'){
+        if (this.#level == 'easy'){
             this.#chosenAlgorythm = algorythms.RandomGame;
             this.randomPlay(userField);
-       /* }
+        }
         else{
             if(!this.#wasAlgoritmEnded){
                 switch(this.#chosenAlgorythm){
+                    case algorythms.RandomGame:
+                        this.randomPlay(userField);
+                        break;
                     case algorythms.DiagonalShooting:
                         this.diagonalsShooting(userField);
                         break;
@@ -279,25 +282,104 @@ class Enemy extends Player{
                     case algorythms.DiagonalsShooting2:
                         for(let i = 0; i<this.#finishedShips.length; i++){
                             if(this.#finishedShips[i] == 3){
-                                this.#wasAlgoritmEnded = true;
+                                this.#chosenAlgorythm = algorythms.ChessOrder;
+                                this.shootInChessOrder(userField);
                                 break;
                             }
                         }
+                        this.diagonalsShooting2(userField);
                         break;
                     case algorythms.DiagonalsShooting3:
                         for(let i = 0; i<this.#finishedShips.length; i++){
                             if(this.#finishedShips[i] == 4){
-                                this.#wasAlgoritmEnded = true;
+                                this.#chosenAlgorythm = algorythms.DiagonalsShooting2;
+                                this.diagonalsShooting2(userField);
                                 break;
                             }
                         }
+                        this.diagonalsShooting3(userField);
                         break;
                 }
             }
             else{
-
+                this.#wasAlgoritmEnded = false;
+                let rnd;
+                switch(this.#chosenAlgorythm){
+                    case algorythms.RandomGame:
+                        this.randomPlay(userField);
+                        break;
+                    case algorythms.DiagonalShooting:
+                        rnd = getRandom(1,3);
+                        switch(rnd){
+                            case 1:
+                                this.#chosenAlgorythm = algorythms.EdgesShooting;
+                                this.edgesShooting(userField);
+                                break;
+                            case 2:
+                                this.#chosenAlgorythm = algorythms.DiagonalsShooting2;
+                                this.diagonalsShooting2(userField);
+                                break;
+                            case 3:
+                                this.#chosenAlgorythm = DiagonalsShooting3;
+                                this.diagonalsShooting3(userField);
+                                break;
+                        }
+                        break;
+                    case algorythms.EdgesShooting:
+                        rnd = getRandom(1,3);
+                        switch(rnd){
+                            case 1:
+                                this.#chosenAlgorythm = algorythms.DiagonalShooting;
+                                this.diagonalsShooting(userField);
+                                break;
+                            case 2:
+                                this.#chosenAlgorythm = algorythms.DiagonalsShooting2;
+                                this.diagonalsShooting2(userField);
+                                break;
+                            case 3:
+                                this.#chosenAlgorythm = DiagonalsShooting3;
+                                this.diagonalsShooting3(userField);
+                                break;
+                            case 4:
+                                this.#chosenAlgorythm = algorythms.ShootCenter();
+                                this.shootCenter(userField);
+                                break;
+                        }
+                        break;
+                    case algorythms.ChessOrder:
+                        this.#chosenAlgorythm = algorythms.RandomGame;
+                        this.randomPlay(userField);
+                        break;
+                    case algorythms.ShootCenter:
+                        case 1:
+                                this.#chosenAlgorythm = algorythms.DiagonalShooting;
+                                this.diagonalsShooting(userField);
+                                break;
+                            case 2:
+                                this.#chosenAlgorythm = algorythms.DiagonalsShooting2;
+                                this.diagonalsShooting2(userField);
+                                break;
+                            case 3:
+                                this.#chosenAlgorythm = DiagonalsShooting3;
+                                this.diagonalsShooting3(userField);
+                                break;
+                            case 4:
+                                this.#chosenAlgorythm = algorythms.EdgesShooting;
+                                this.edgesShooting(userField);
+                                break;
+                        break;
+                    case algorythms.DiagonalsShooting2:
+                        this.#chosenAlgorythm = algorythms.ChessOrder;
+                        this.shootInChessOrder(userField);
+                        break;
+                    case algorythms.DiagonalsShooting3:
+                        this.#chosenAlgorythm = algorythms.DiagonalsShooting2;
+                        this.diagonalsShooting2(userField);
+                        break;
+                    
+                }
             }
-        }*/
+        }
     }
 
     startGame(userField){
