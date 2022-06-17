@@ -84,7 +84,7 @@ class Enemy extends Player{
     #chosenAlgorythm;
     #finishingMode;
     #finishingCells = [];
-    #currentShip
+    #currentShip;
     #didEnemyHitDeck = false;
     #wasAlgoritmEnded;
     constructor(fieldSize){
@@ -96,7 +96,7 @@ class Enemy extends Player{
     toPlay(userField){
         if (this.#finishingMode){
             this.finishShip(userField)
-            if (this.#finishingMode){
+            if (!this.#finishingMode){
                 this.changeAlgorythm(userField);
             }
         }
@@ -114,13 +114,13 @@ class Enemy extends Player{
         }
         if(this.#cells.length == 0){
             this.#wasAlgoritmEnded = true;
-            this.changeAlgorythm(userField)
+            this.changeAlgorythm(userField);
         }
     }
 
     finishShip(userField){
         let x, y, res;
-        if(this.#currentShip.length == 1){
+        if(this.#finishingCells.length == 1){
             x = this.#finishingCells[0].x;
             y = this.#finishingCells[0].y;
             if(userField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
@@ -210,6 +210,7 @@ class Enemy extends Player{
         }
         if (this.#finishingCells[0].deck.ship.shipStatus = shipStatus.Killed){
             this.#finishingMode = false;
+            this.#finishingCells = [];
         }
     }
 
@@ -219,8 +220,26 @@ class Enemy extends Player{
             this.randomPlay(userField);
         }
         else{
-            this.#chosenAlgorythm = algorythms.DiagonalShooting;
-            this.diagonalsShooting(userField);
+            if(!this.#wasAlgoritmEnded){
+                switch(this.#chosenAlgorythm){
+                    case algorythms.DiagonalShooting:
+                        this.diagonalsShooting(userField);
+                        break;
+                    case algorythms.EdgesShooting:
+                        this.edgesShooting(userField);
+                        break;
+                    case algorythms.ChessOrder:
+                        this.shootInChessOrder(userField);
+                        break;
+                    case algorythms.ShootCenter:
+                        this.shootCenter(userField);
+                        break;
+                    case algorythms.DiagonalsShooting2:
+                        break;
+                    case algorythms.DiagonalsShooting3:
+                        break;
+                }
+            }
         }
     }
 
