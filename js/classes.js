@@ -227,7 +227,7 @@ class Enemy extends Player{
 
         }
         let deck = this.#finishingCells[0].deck;
-        if (deck.ship.shipStatus = shipStatus.Killed){
+        if (deck.numOfDecks == this.#finishingCells.length){
             this.#finishingMode = false;
             this.#finishedShips.push(this.#finishingCells.length);
             this.#finishingCells = [];
@@ -569,9 +569,11 @@ class Deck{
     isKilled;
     position;
     ship;
+    numOfDecks;
     constructor(ship){
         this.isKilled = false;
         this.ship = ship;
+        this.numOfDecks = ship.numOfDecks;
     }
 
     /*get isKilled(){
@@ -593,7 +595,7 @@ class Deck{
 
     setPosition(cell){
         cell.placeDeck(this);
-        this.#position = cell;
+        this.position = cell;
     }
     
 

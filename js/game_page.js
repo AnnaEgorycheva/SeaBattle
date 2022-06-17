@@ -36,7 +36,7 @@ window.onload = function() {
     
     function play(){
         let cell;
-        while(true){
+        while(isGameEnded==false){
             userMove();
             do{
                 cell = enemy.toPlay(user.playerField);
