@@ -88,9 +88,6 @@ function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
         for (let j = fromY; j < toY; j++) {
             if(playerField[j][i] == 1)
                 res = false;
-            // let currentCell = playerField.getCell(i, j);
-            // if (currentCell.isOccupied == true)
-            //     res = false;
         }
     }
 	return res;
@@ -254,24 +251,6 @@ function getShipsLocation(algorithm) {
     }
 
     return allLightShips;
-
-    
-
-    // for (let ship of playerShips) {
-	// 	let decks = ship.numOfDecks;
-
-	// 	let shipInfo = getStartDeckCoord(decks, playerField, algorithm);
-    //     shipInfo.kx == 0 ? ship.direction = 'vertical' : ship.direction = 'horizontal';
-    //     let k = 0;
-    //     for (let deck of ship.decks) {
-    //         let x = shipInfo.x + k * shipInfo.kx;
-    //         let y = shipInfo.y + k * shipInfo.ky;
-    //         let curCell = playerField.getCell(x, y);
-
-    //         deck.setPosition(curCell);
-    //         k++;
-    //     }
-    // }
 }
 
 
