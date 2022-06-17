@@ -1,6 +1,6 @@
 const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured'}
-const algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting', EdgesShooting: 'edges shooting', DiagonalsShooting2: 'diagonal shooting 2', DiagonalsShooting3: 'diagonal shooting 3', ChessOrder: 'chess order', ShootCenter: 'shoot center'};
-let level = 1, isGameEnded = false;
+var algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting', EdgesShooting: 'edges shooting', DiagonalsShooting2: 'diagonal shooting 2', DiagonalsShooting3: 'diagonal shooting 3', ChessOrder: 'chess order', ShootCenter: 'shoot center'};
+let level = 'light', isGameEnded = false;
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex ;
@@ -84,38 +84,56 @@ class Enemy extends Player{
     #chosenAlgorythm;
     #finishingMode;
     #finishingCells = [];
-    #currentShip
+    #finishedShips = []
+    #currentShip;
     #didEnemyHitDeck = false;
+    #wasAlgoritmEnded;
     constructor(fieldSize){
         super(fieldSize,level);
-        this.#finishingMode = false;;
+        this.#finishingMode = false;
+        this.#wasAlgoritmEnded = false;
     }
     
     toPlay(userField){
         if (this.#finishingMode){
             this.finishShip(userField)
-            if (this.#finishingMode){
-                this.randomPlay(userField);
+            if (!this.#finishingMode){
+                this.changeAlgorythm(userField);
             }
         }
         else {
             let cell = this.#cells.shift();
+            let cellWithDeck;
+            let ship;
             let res = this.shoot(cell.x,cell.y, userField);
             if(res){
-                this.#finishingMode = true;
-                this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
-                this.wasShipHited = true;
+                cellWithDeck = userField.getCell(this.#cells.shift().x,this.#cells.shift().y);
+                ship = cellWithDeck.ship;
+                if(ship.decks.length > 1){
+                    this.#finishingMode = true;
+                    this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
+                    this.wasShipHited = true;
+                }
+                else{
+                    this.wasShipHited = true;
+                    this.changeAlgorythm(userField);
+                    this.#finishedShips.push(1);
+                }
+                
             }
             else{
                 this.wasShipHited = false;
             }
         }
+        if(this.#cells.length == 0){
+            this.#wasAlgoritmEnded = true;
+            this.changeAlgorythm(userField);
+        }
     }
 
     finishShip(userField){
         let x, y, res;
-        if(this.#currentShip.length() == 1){
-            
+        if(this.#finishingCells.length == 1){
             x = this.#finishingCells[0].x;
             y = this.#finishingCells[0].y;
             if(userField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
@@ -126,7 +144,6 @@ class Enemy extends Player{
                 else{
                     this.wasShipHited = false;
                 }
-                   
             }
             else if(userField.getCell(x-1, y).isHited == false && (x - 1)>=0){
                 res = this.shoot(x-1, y, userField);
@@ -136,7 +153,6 @@ class Enemy extends Player{
                 else{
                     this.wasShipHited = false;
                 }
-                    
             }
             else if(userField.getCell(x, y+1).isHited == false && (y + 1)<this.fieldSize){
                 res = this.shoot(x, y+1, userField);
@@ -146,7 +162,6 @@ class Enemy extends Player{
                 else{
                     this.wasShipHited = false;
                 }
-                
             }
             else if(userField.getCell(x, y-1).isHited == false && (y - 1)>=0){
                 res = this.shoot(x, y-1, userField);
@@ -155,10 +170,8 @@ class Enemy extends Player{
                 }
                 else{
                     this.wasShipHited = false;
-                }
-                    
+                }   
             }
-            
         }
         else{
             for (let i = 0; i<this.#finishingCells.length(); i++){
@@ -210,23 +223,118 @@ class Enemy extends Player{
         }
         if (this.#finishingCells[0].deck.ship.shipStatus = shipStatus.Killed){
             this.#finishingMode = false;
+            this.#finishedShips.push(this.#finishingCells.length);
+            this.#finishingCells = [];
         }
     }
 
     changeAlgorythm(userField){
-        if (level == 1){
+        if (level == 'light'){
             this.#chosenAlgorythm = algorythms.RandomGame;
             this.randomPlay(userField);
         }
         else{
-            this.#chosenAlgorythm = algorythms.DiagonalShooting;
-            this.diagonalsShooting(userField);
+            if(!this.#wasAlgoritmEnded){
+                switch(this.#chosenAlgorythm){
+                    case algorythms.DiagonalShooting:
+                        this.diagonalsShooting(userField);
+                        break;
+                    case algorythms.EdgesShooting:
+                        this.edgesShooting(userField);
+                        break;
+                    case algorythms.ChessOrder:
+                        this.shootInChessOrder(userField);
+                        break;
+                    case algorythms.ShootCenter:
+                        this.shootCenter(userField);
+                        break;
+                    case algorythms.DiagonalsShooting2:
+                        for(let i = 0; i<this.#finishedShips.length; i++){
+                            if(this.#finishedShips[i] == 3){
+                                this.#wasAlgoritmEnded = true;
+                                break;
+                            }
+                        }
+                        break;
+                    case algorythms.DiagonalsShooting3:
+                        for(let i = 0; i<this.#finishedShips.length; i++){
+                            if(this.#finishedShips[i] == 4){
+                                this.#wasAlgoritmEnded = true;
+                                break;
+                            }
+                        }
+                        break;
+                }
+            }
+            else{
+
+            }
         }
     }
 
     startGame(userField){
-        this.#chosenAlgorythm = algorythms.RandomGame;
-        this.randomPlay(userField);
+        this.chooseFirstAlgorithm(userField);
+        this.toPlay(userField);
+    }
+
+    chooseFirstAlgorithm(userField){
+        let rnd;
+        switch(level){
+            case 'light':
+                this.#chosenAlgorythm =  algorythms.RandomGame;
+                console.log(this.#chosenAlgorythm);
+                break;
+            case 'medium':
+                rnd = getRandom(1,6);
+                switch(rnd){
+                    case 1:
+                        this.#chosenAlgorythm = algorythms.DiagonalShooting;
+                        this.diagonalsShooting(userField);
+                        break;
+                    case 2:
+                        this.#chosenAlgorythm = algorythms.EdgesShooting;
+                        this.edgesShooting(userField);
+                        break;
+                    case 3:
+                        this.#chosenAlgorythm = algorythms.DiagonalsShooting2;
+                        this.diagonalsShooting2(userField);
+                        break;
+                    case 4:
+                        this.#chosenAlgorythm = algorythms.DiagonalsShooting3;
+                        this.diagonalsShooting3(userField);
+                        break;
+                    case 5:
+                        this.#chosenAlgorythm = algorythms.ChessOrder;
+                        this.shootInChessOrder(userField);
+                        break;
+                    case 6:
+                        this.#chosenAlgorythm = algorythms.ShootCenter;
+                        this.shootCenter(userField);
+                        break;
+                }
+                break;
+            case 'hard':
+                rnd = getRandom(1,4);
+                switch(rnd){
+                    case 1:
+                        this.#chosenAlgorythm = algorythms.DiagonalShooting;
+                        this.diagonalsShooting(userField);
+                        break;
+                    case 2:
+                        this.#chosenAlgorythm = algorythms.EdgesShooting;
+                        this.edgesShooting(userField);
+                        break;
+                    case 3:
+                        this.#chosenAlgorythm = algorythms.DiagonalsShooting3;
+                        this.diagonalsShooting3(userField);
+                        break;
+                    case 4:
+                        this.#chosenAlgorythm = algorythms.ShootCenter;
+                        this.shootCenter(userField);
+                        break;
+                }
+                break;
+        }
     }
 
     randomPlay(userField){
@@ -573,3 +681,4 @@ class Cell{
         //Нужно добавить привязку клетки к конкретной палубе.
     }
 } 
+
