@@ -33,7 +33,7 @@ class Player{
         this.playerField = new Field(fieldSize);
         this.wasShipHited = false;
         let ship;
-        for (let i = 1; i<=4; i++){
+        for (let i = 4; i>=1; i--){
             switch (i){
                 case 1:
                     for (let j = 0; j < 4; j++){
@@ -512,9 +512,11 @@ class Ship{
     #shipStatus;
     #decks;
     #numOfDecks;
+    #direction;
     constructor(numOfDecks){
         this.#numOfDecks = numOfDecks;
-        this.#decks = []
+        this.#decks = [];
+        this.#direction = '';
         for (let i = 0; i < numOfDecks; i++){
             this.#decks[i] = new Deck(this);
         }
@@ -535,6 +537,14 @@ class Ship{
 
     get numOfDecks(){
         return this.#numOfDecks;
+    }
+
+    get direction(){
+        return this.#direction;
+    }
+
+    set direction(val){
+        this.#direction = val;
     }
 
     getNotKilledDecks(){
@@ -569,6 +579,10 @@ class Deck{
 
     get ship(){
         return this.#ship;
+    }
+
+    get position(){
+        return this.#position
     }
 
     setPosition(cell){
@@ -666,8 +680,5 @@ class Cell{
         this.#deck = deck;
         //Нужно добавить привязку клетки к конкретной палубе.
     }
-}
+} 
 
-let enemy = new Enemy(10);
-let user = new User(10);
-enemy.startGame(user.playerField);
