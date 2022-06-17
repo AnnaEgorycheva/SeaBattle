@@ -1,4 +1,18 @@
+function fillUserField() {
+    let user = new User(10);
+    getShipsLocation(user.playerField, user.ships, chooseAlgorithmBasedOnLevel('easy'));
+
+    let userShipsPositions = convertPlayerInfoToLightShipInfo(user);
+    localStorage.setItem('userFieldInfo', JSON.stringify(userShipsPositions));
+
+    console.log(user);
+    console.log(userShipsPositions);
+    console.log(convertLightShipInfoToPlayerInfo(userShipsPositions, 'user'));
+}
+
 window.onload = function() {
+    $('.auto-placement-btn').click(fillUserField);
+
     var sizeCoordinateMatrix = 10;
     var coordinateMatrix = new Array(sizeCoordinateMatrix);
     for (var i = 0; i < 3; i++) {
@@ -108,7 +122,7 @@ window.onload = function() {
         this.style.top = coord[1] +'px';
     }
 
-    canvas = document.getElementsByClassName("playing-field"), 
+    let canvas = document.getElementsByClassName("playing-field"), 
     context = canvas[0].getContext("2d");
     var img = new Image();
     img.src = "../images/playingField.png";

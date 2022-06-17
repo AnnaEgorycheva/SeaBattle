@@ -38,8 +38,6 @@ const SHIP_LOCATION_ALGORITHMS = {
         }
     ],
 }
-let chosenAlgorithm; 
-let field = [...Array(10)].map(() => Array(10).fill(0));
 
 function getRandomValue(boundInfo) {
     let randomNumber, randomIndex;
@@ -228,6 +226,7 @@ function getShipsLocation(playerField, playerShips, algorithm) {
 		let decks = ship.numOfDecks;
 
 		let shipInfo = getStartDeckCoord(decks, playerField, algorithm);
+        shipInfo.kx == 0 ? ship.direction = 'vertical' : ship.direction = 'horizontal';
         let k = 0;
         for (let deck of ship.decks) {
             let x = shipInfo.x + k * shipInfo.kx;
@@ -244,17 +243,3 @@ function getShipsLocation(playerField, playerShips, algorithm) {
 function chooseAlgorithmBasedOnLevel(chosenLevel) {
     return getRandomValue({type: "enum", arr: SHIP_LOCATION_ALGORITHMS[chosenLevel]});
 }
-
-chosenAlgorithm = chooseAlgorithmBasedOnLevel("hard");
-
-let enemy = new Enemy(10);
-getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
-for(let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-        let cur = enemy.playerField.getCell(i, j);
-        if (cur.isOccupied == true)
-            field[j][i] = 1;
-    }
-}
-console.log(enemy);
-console.log(field);

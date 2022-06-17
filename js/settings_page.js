@@ -17,6 +17,15 @@ function changeActiveFieldSizeButton() {
     }
 }
 
+function saveUserSettings() {
+    let level = currentActiveLevelBtn.attr('id');
+    let fieldSize = currentFieldSizeBtn.attr('id');
+    localStorage.setItem('level', level);
+    localStorage.setItem('fieldSize', fieldSize);
+
+    window.location.href = 'ShipPlacementPage.html';
+}
+
 $(document).ready(function() {
     currentActiveLevelBtn = $('.level-btn.active');
     let allLevelBtns = $('.level-btn');
@@ -34,4 +43,6 @@ $(document).ready(function() {
             $(this).tooltip('hide'); 
         }
     );
+
+    $('.allocation-btn').click(saveUserSettings);
 })
