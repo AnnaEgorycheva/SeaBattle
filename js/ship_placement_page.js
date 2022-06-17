@@ -5,9 +5,7 @@ function fillUserField() {
     let userShipsPositions = convertPlayerInfoToLightShipInfo(user);
     localStorage.setItem('userFieldInfo', JSON.stringify(userShipsPositions));
 
-    console.log(user);
-    console.log(userShipsPositions);
-    console.log(convertLightShipInfoToPlayerInfo(userShipsPositions, 'user'));
+    // convertLightShipInfoToPlayerInfo(userShipsPositions, 'user')
 }
 
 window.onload = function() {
