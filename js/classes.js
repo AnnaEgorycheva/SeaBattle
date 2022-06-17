@@ -112,17 +112,18 @@ class Enemy extends Player{
             let res = this.shoot(cell.x,cell.y, userField);
             if(res){
                 cellWithDeck = userField.getCell(this.#cells.shift().x,this.#cells.shift().y);
-                ship = cellWithDeck.ship;
-                //if(ship.numOfDecks > 1){
+                let deck= cellWithDeck.deck;
+                let num = deck.numOfDecks;
+                if(num > 1){
                     this.#finishingMode = true;
                     this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
                     this.wasShipHited = true;
-                //}
-                //else{
-                //    this.wasShipHited = true;
-                //    this.changeAlgorythm(userField);
-                //    this.#finishedShips.push(1);
-                //}
+                }
+                else{
+                    this.wasShipHited = true;
+                    this.changeAlgorythm(userField);
+                    this.#finishedShips.push(1);
+                }
                 
             }
             else{
