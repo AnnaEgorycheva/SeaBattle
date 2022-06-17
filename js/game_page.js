@@ -38,15 +38,17 @@ window.onload = function() {
         let cell;
         while(isGameEnded==false){
             userMove();
+            let res = false;
             do{
                 cell = enemy.toPlay(user.playerField);
-                if(enemy.wasShipHitted){
+                res = enemy.getEnemyStatus();
+                if(res){
                     hitEnemy(cell.x, cell.y);
                 }
                 else{
                     emptyCageEnemy(cell.x,cell.y);
                 }
-            } while(enemy.wasShipHitted);
+            } while(res);
         }
     }
 
