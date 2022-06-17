@@ -1,6 +1,6 @@
 const shipStatus = {Killed: 'killed', NotKilled: 'not killed', Injured: 'injured'}
-const algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting', EdgesShooting: 'edges shooting', DiagonalsShooting2: 'diagonal shooting 2', DiagonalsShooting3: 'diagonal shooting 3', ChessOrder: 'chess order', ShootCenter: 'shoot center'};
-let level = 1, isGameEnded = false;
+var algorythms = {RandomGame: 'random game', DiagonalShooting: 'diagonal shooting', EdgesShooting: 'edges shooting', DiagonalsShooting2: 'diagonal shooting 2', DiagonalsShooting3: 'diagonal shooting 3', ChessOrder: 'chess order', ShootCenter: 'shoot center'};
+let level = 'light', isGameEnded = false;
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex ;
@@ -115,7 +115,6 @@ class Enemy extends Player{
     finishShip(userField){
         let x, y, res;
         if(this.#currentShip.length() == 1){
-            
             x = this.#finishingCells[0].x;
             y = this.#finishingCells[0].y;
             if(userField.getCell(x+1, y).isHited == false && (x + 1)<this.fieldSize){
@@ -126,7 +125,6 @@ class Enemy extends Player{
                 else{
                     this.wasShipHited = false;
                 }
-                   
             }
             else if(userField.getCell(x-1, y).isHited == false && (x - 1)>=0){
                 res = this.shoot(x-1, y, userField);
@@ -136,7 +134,6 @@ class Enemy extends Player{
                 else{
                     this.wasShipHited = false;
                 }
-                    
             }
             else if(userField.getCell(x, y+1).isHited == false && (y + 1)<this.fieldSize){
                 res = this.shoot(x, y+1, userField);
@@ -146,7 +143,6 @@ class Enemy extends Player{
                 else{
                     this.wasShipHited = false;
                 }
-                
             }
             else if(userField.getCell(x, y-1).isHited == false && (y - 1)>=0){
                 res = this.shoot(x, y-1, userField);
@@ -155,10 +151,8 @@ class Enemy extends Player{
                 }
                 else{
                     this.wasShipHited = false;
-                }
-                    
+                }   
             }
-            
         }
         else{
             for (let i = 0; i<this.#finishingCells.length(); i++){
@@ -230,7 +224,63 @@ class Enemy extends Player{
     }
 
     chooseFirstAlgorithm(userField){
-
+        let rnd;
+        switch(level){
+            case 'light':
+                this.#chosenAlgorythm =  algorythms.RandomGame;
+                console.log(this.#chosenAlgorythm);
+                break;
+            case 'medium':
+                rnd = getRandom(1,6);
+                switch(rnd){
+                    case 1:
+                        this.#chosenAlgorythm = algorythms.DiagonalShooting;
+                        this.diagonalsShooting(userField);
+                        break;
+                    case 2:
+                        this.#chosenAlgorythm = algorythms.EdgesShooting;
+                        this.edgesShooting(userField);
+                        break;
+                    case 3:
+                        this.#chosenAlgorythm = algorythms.DiagonalsShooting2;
+                        this.diagonalsShooting2(userField);
+                        break;
+                    case 4:
+                        this.#chosenAlgorythm = algorythms.DiagonalsShooting3;
+                        this.diagonalsShooting3(userField);
+                        break;
+                    case 5:
+                        this.#chosenAlgorythm = algorythms.ChessOrder;
+                        this.shootInChessOrder(userField);
+                        break;
+                    case 6:
+                        this.#chosenAlgorythm = algorythms.ShootCenter;
+                        this.shootCenter(userField);
+                        break;
+                }
+                break;
+            case 'hard':
+                rnd = getRandom(1,4);
+                switch(rnd){
+                    case 1:
+                        this.#chosenAlgorythm = algorythms.DiagonalShooting;
+                        this.diagonalsShooting(userField);
+                        break;
+                    case 2:
+                        this.#chosenAlgorythm = algorythms.EdgesShooting;
+                        this.edgesShooting(userField);
+                        break;
+                    case 3:
+                        this.#chosenAlgorythm = algorythms.DiagonalsShooting3;
+                        this.diagonalsShooting3(userField);
+                        break;
+                    case 4:
+                        this.#chosenAlgorythm = algorythms.ShootCenter;
+                        this.shootCenter(userField);
+                        break;
+                }
+                break;
+        }
     }
 
     randomPlay(userField){
@@ -564,3 +614,6 @@ class Cell{
     }
 }
 
+let enemy = new Enemy(10);
+let user = new User(10);
+enemy.startGame(user.playerField);
