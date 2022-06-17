@@ -118,15 +118,16 @@ class Enemy extends Player{
             console.log(cell);
             let res = this.shoot(cell.x,cell.y, userField);
             if(res){
-                this.#cells = [];
                 cellWithDeck = userField.getCell(this.#cells.shift().x,this.#cells.shift().y);
                 let num = cellWithDeck.numOfDecksAtCell;
                 if(num > 1){
                     this.#finishingMode = true;
                     this.#finishingCells.push(userField.getCell(this.#cells.shift().x,this.#cells.shift().y));
                     this.wasShipHited = true;
+                    this.#cells = [];
                 }
                 else{
+                    this.#cells = [];
                     this.wasShipHited = true;
                     this.changeAlgorythm(userField);
                     this.#finishedShips.push(1);
@@ -143,6 +144,7 @@ class Enemy extends Player{
             this.changeAlgorythm(userField);
         }
         console.log(this.#cells.length)
+        console.log(resultCell);
         return resultCell;
     }
 
