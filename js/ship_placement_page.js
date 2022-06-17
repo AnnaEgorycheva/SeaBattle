@@ -1,4 +1,11 @@
+function fillUserField() {
+    let userFieldInfo = getShipsLocation(chooseAlgorithmBasedOnLevel('easy'));
+    localStorage.setItem('userFieldInfo', JSON.stringify(userFieldInfo));
+}
+
 window.onload = function() {
+    $('.auto-placement-btn').click(fillUserField);
+
     var sizeCoordinateMatrix = 10;
     var coordinateMatrix = new Array(sizeCoordinateMatrix);
     for (var i = 0; i < 3; i++) {
@@ -108,7 +115,7 @@ window.onload = function() {
         this.style.top = coord[1] +'px';
     }
 
-    canvas = document.getElementsByClassName("playing-field"), 
+    let canvas = document.getElementsByClassName("playing-field"), 
     context = canvas[0].getContext("2d");
     var img = new Image();
     img.src = "../images/playingField.png";

@@ -1,14 +1,22 @@
+let user, enemy;
+function createPlayers() {
+    user = convertLightShipInfoToPlayerInfo(JSON.parse(localStorage.getItem('userFieldInfo')), 'user');
+    enemy = convertLightShipInfoToPlayerInfo(JSON.parse(localStorage.getItem('enemyFieldInfo')), 'enemy');
+}
+
 window.onload = function() {
+    createPlayers();
+
     var sizeCoordinateMatrix = 10;
     var coordinateMatrix = new Array(sizeCoordinateMatrix);
     for (var i = 0; i < sizeCoordinateMatrix; i++) {
         coordinateMatrix[i] = 52.8 * i;
     }
 
-    canvasOpponent = document.getElementsByClassName("opponent-playing-field");
-    canvasMy = document.getElementsByClassName("my-playing-field");
-    contextOpponent = canvasOpponent[0].getContext("2d");
-    contextMy = canvasMy[0].getContext("2d");
+    var canvasOpponent = document.getElementsByClassName("opponent-playing-field");
+    var canvasMy = document.getElementsByClassName("my-playing-field");
+    var contextOpponent = canvasOpponent[0].getContext("2d");
+    var contextMy = canvasMy[0].getContext("2d");
     var imgPlayingField = new Image();
     imgPlayingField.src = "../images/playingField.png";
     imgPlayingField.onload = function() {

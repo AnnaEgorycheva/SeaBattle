@@ -1,3 +1,16 @@
+class LightShip {
+    decksNum;
+    direction;
+    x;
+    y;
+    constructor(decksNum, direction){
+        this.decksNum = decksNum;
+        this.direction = direction;
+        this.x = [];
+        this.y = [];
+    }
+}
+
 const SHIP_LOCATION_ALGORITHMS = {
     easy: [
         {
@@ -38,8 +51,6 @@ const SHIP_LOCATION_ALGORITHMS = {
         }
     ],
 }
-let chosenAlgorithm; 
-let field = [...Array(10)].map(() => Array(10).fill(0));
 
 function getRandomValue(boundInfo) {
     let randomNumber, randomIndex;
@@ -88,8 +99,7 @@ function checkShipLocation(x, y, kx, ky, decks, playerField, algorithm) {
     }
     for (let i = fromX; i < toX; i++) {
         for (let j = fromY; j < toY; j++) {
-            let currentCell = playerField.getCell(i, j);
-            if (currentCell.isOccupied == true)
+            if(playerField[j][i] == 1)
                 res = false;
         }
     }
@@ -223,38 +233,39 @@ function getStartDeckCoord(decksNum, playerField, algorithm) {
     return {x, y, kx, ky}; // координаты первой палубы корабля, а также информация о направлении
 }
 
-function getShipsLocation(playerField, playerShips, algorithm) {
-    for (let ship of playerShips) {
-		let decks = ship.numOfDecks;
+function getShipsLocation(algorithm) {
+    let field = [...Array(10)].map(() => Array(10).fill(0));
+    let allLightShips = [];
+    let SHIP_DATA = {
+		fourdeck: [1, 4],
+		tripledeck: [2, 3],
+		doubledeck: [3, 2],
+		singledeck: [4, 1]
+	};
 
-		let shipInfo = getStartDeckCoord(decks, playerField, algorithm);
-        let k = 0;
-        for (let deck of ship.decks) {
-            let x = shipInfo.x + k * shipInfo.kx;
-            let y = shipInfo.y + k * shipInfo.ky;
-            let curCell = playerField.getCell(x, y);
-
-            deck.setPosition(curCell);
-            k++;
-        }
+    for (let type in SHIP_DATA) {
+		let count = SHIP_DATA[type][0];
+		let decks = SHIP_DATA[type][1];
+        for (let i = 0; i < count; i++) {
+            let k = 0;
+			let shipInfo = getStartDeckCoord(decks, field, algorithm);
+            let direction = shipInfo.kx == 0 ? 'vertical' : 'horizontal';
+            let lightShip = new LightShip(decks, direction);
+            while (k < decks) {
+                let x = shipInfo.x + k * shipInfo.kx;
+                let y = shipInfo.y + k * shipInfo.ky;
+                lightShip.x.push(x);
+                lightShip.y.push(y);
+                field[y][x] = 1;
+                k++;
+            }
+            allLightShips.push(lightShip);
+		}
     }
-}
 
+    return allLightShips;
+}
 
 function chooseAlgorithmBasedOnLevel(chosenLevel) {
     return getRandomValue({type: "enum", arr: SHIP_LOCATION_ALGORITHMS[chosenLevel]});
 }
-
-chosenAlgorithm = chooseAlgorithmBasedOnLevel("hard");
-
-let enemy = new Enemy(10);
-getShipsLocation(enemy.playerField, enemy.ships, chosenAlgorithm);
-for(let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-        let cur = enemy.playerField.getCell(i, j);
-        if (cur.isOccupied == true)
-            field[j][i] = 1;
-    }
-}
-console.log(enemy);
-console.log(field);
