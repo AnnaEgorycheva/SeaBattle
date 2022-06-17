@@ -1,5 +1,5 @@
 function convertLightShipInfoToPlayerInfo(allLightShips, role) {
-    let player = role == 'user' ? new User(10) : new Enemy(10);
+    let player = role == 'user' ? new User(10) : new Enemy(10, localStorage.getItem("level"));
     for(let i = 0; i < 10; i++) {
         let lightShip = allLightShips[i];
         let playerShip = player.ships[i];

@@ -2,7 +2,10 @@ let user, enemy;
 function createPlayers() {
     user = convertLightShipInfoToPlayerInfo(JSON.parse(localStorage.getItem('userFieldInfo')), 'user');
     enemy = convertLightShipInfoToPlayerInfo(JSON.parse(localStorage.getItem('enemyFieldInfo')), 'enemy');
+    enemy.startGame(user.playerField);
 }
+
+
 
 window.onload = function() {
     createPlayers();
@@ -31,6 +34,24 @@ window.onload = function() {
         };
     }; 
     
+    function play(){
+        let cell;
+        while(true){
+            userMove();
+            do{
+                cell = enemy.toPlay();
+                if(enemy.wasShipHitted){
+                    hitEnemy(cell.x, cell.y);
+                }
+                else{
+                    emptyCageEnemy(cell.x,cell.y);
+                }
+            } while(enemy.wasShipHitted);
+        }
+    }
+
+    play();
+
     function userMove() {
         document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "normal";
         document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "bold";
@@ -38,8 +59,7 @@ window.onload = function() {
             var loc = windowToCanvas(canvasOpponent, e.clientX, e.clientY);
             var x = identifyCell(loc.x);
             var y = identifyCell(loc.y);
-            //result = функция проверки клетки(x, y) получает bool
-            result = false;
+            result = user.shoot(x,y,enemy.playerField)
             if (result) {
                 hit(x, y);
             } else {
@@ -73,6 +93,22 @@ window.onload = function() {
         imgHit.src = "../images/hit.png";
         imgHit.onload = function() {
             contextOpponent.drawImage(imgHit, coordinateMatrix[x], coordinateMatrix[y], 51, 51);
+        };
+    }
+
+    function emptyCageEnemy(x, y) {
+        var imgEmptyCage = new Image();
+        imgEmptyCage.src = "../images/emptyCage.png";
+        imgEmptyCage.onload = function() {
+            contextMy.drawImage(imgEmptyCage, coordinateMatrix[x], coordinateMatrix[y], 51, 51);
+        };        
+    }
+    
+    function hitEnemy(x, y) {
+        var imgHit = new Image();
+        imgHit.src = "../images/hit.png";
+        imgHit.onload = function() {
+            contextMy.drawImage(imgHit, coordinateMatrix[x], coordinateMatrix[y], 51, 51);
         };
     }
 }

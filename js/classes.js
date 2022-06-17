@@ -76,7 +76,10 @@ class Player{
 }
 
 class User extends Player{
-   
+    shoot(x, y, enemyField){
+        const res = enemyField.toBeShooted(x,y);
+        return res;
+    }  
 }
 
 class Enemy extends Player{
@@ -88,10 +91,12 @@ class Enemy extends Player{
     #currentShip;
     #didEnemyHitDeck = false;
     #wasAlgoritmEnded;
-    constructor(fieldSize){
-        super(fieldSize,level);
+    #level;
+    constructor(fieldSize, level){
+        super(fieldSize);
         this.#finishingMode = false;
         this.#wasAlgoritmEnded = false;
+        this.#level = level;
     }
     
     toPlay(userField){
@@ -124,6 +129,7 @@ class Enemy extends Player{
             else{
                 this.wasShipHited = false;
             }
+            return cell;
         }
         if(this.#cells.length == 0){
             this.#wasAlgoritmEnded = true;
@@ -229,7 +235,7 @@ class Enemy extends Player{
     }
 
     changeAlgorythm(userField){
-        if (level == 'light'){
+        if (this.#level == 'easy'){
             this.#chosenAlgorythm = algorythms.RandomGame;
             this.randomPlay(userField);
         }
@@ -274,13 +280,12 @@ class Enemy extends Player{
 
     startGame(userField){
         this.chooseFirstAlgorithm(userField);
-        this.toPlay(userField);
     }
 
     chooseFirstAlgorithm(userField){
         let rnd;
-        switch(level){
-            case 'light':
+        switch(this.#level){
+            case 'easy':
                 this.#chosenAlgorythm =  algorythms.RandomGame;
                 console.log(this.#chosenAlgorythm);
                 break;
