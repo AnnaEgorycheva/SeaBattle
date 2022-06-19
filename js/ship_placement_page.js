@@ -1,22 +1,93 @@
+var sizeCoordinateMatrix = 10;
+var coordinateMatrix = new Array(sizeCoordinateMatrix);
+for (var i = 0; i < 3; i++) {
+    coordinateMatrix[i] = 52.8 * i + 5;
+}
+for (var i = 3; i < 6; i++) {
+    coordinateMatrix[i] = 52.8 * i + 3;
+}
+for (var i = 6; i < sizeCoordinateMatrix; i++) {
+    coordinateMatrix[i] = 52.8 * i + 1;
+}
+
 function fillUserField() {
     let userFieldInfo = getShipsLocation(chooseAlgorithmBasedOnLevel('easy'));
+    drawingShips(userFieldInfo);
     localStorage.setItem('userFieldInfo', JSON.stringify(userFieldInfo));
+}
+
+function drawingShips(userFieldInfo) {
+    var indentX = (window.innerWidth - 528) / 2;
+    var indentY = 94;
+    if (userFieldInfo[0].direction == 'horizontal') {
+        var ship = document.getElementsByClassName('deck4')[0];
+        ship.setAttribute('src', '../images/deck4.png');
+        ship.setAttribute('width', '197');
+        ship.setAttribute('height', '46');
+        ship.style.position = 'absolute';
+        ship.style.left = coordinateMatrix[userFieldInfo[0].x[0]] + indentX + 'px';
+        ship.style.top = coordinateMatrix[userFieldInfo[0].y[0]] + indentY + 'px';  
+    }
+    else {
+        var ship = document.getElementsByClassName('deck4')[0];
+        ship.setAttribute('src', '../images/deck4_90.png');
+        ship.setAttribute('width', '46');
+        ship.setAttribute('height', '197');
+        ship.style.position = 'absolute';
+        ship.style.left = coordinateMatrix[userFieldInfo[0].x[0]] + indentX + 'px';
+        ship.style.top = coordinateMatrix[userFieldInfo[0].y[0]] + indentY + 'px'; 
+    } 
+    for (var i = 1; i <= 2; i++) {
+        if (userFieldInfo[i].direction == 'horizontal') {
+            var ship = document.getElementsByClassName('deck3')[i - 1];
+            ship.setAttribute('src', '../images/deck3.png');
+            ship.setAttribute('width', '147');
+            ship.setAttribute('height', '46');
+            ship.style.position = 'absolute';
+            ship.style.left = coordinateMatrix[userFieldInfo[i].x[0]] + indentX + 'px';
+            ship.style.top = coordinateMatrix[userFieldInfo[i].y[0]] + indentY + 'px';  
+        }
+        else {
+            var ship = document.getElementsByClassName('deck3')[i - 1];
+            ship.setAttribute('src', '../images/deck3_90.png');
+            ship.setAttribute('width', '46');
+            ship.setAttribute('height', '147');
+            ship.style.position = 'absolute';
+            ship.style.left = coordinateMatrix[userFieldInfo[i].x[0]] + indentX + 'px';
+            ship.style.top = coordinateMatrix[userFieldInfo[i].y[0]] + indentY + 'px'; 
+        } 
+    
+    }
+    for (var i = 3; i <= 5; i++) {
+        if (userFieldInfo[i].direction == 'horizontal') {
+            var ship = document.getElementsByClassName('deck2')[i - 3];
+            ship.setAttribute('src', '../images/deck2.png');
+            ship.setAttribute('width', '93');
+            ship.setAttribute('height', '46');
+            ship.style.position = 'absolute';
+            ship.style.left = coordinateMatrix[userFieldInfo[i].x[0]] + indentX + 'px';
+            ship.style.top = coordinateMatrix[userFieldInfo[i].y[0]] + indentY + 'px';  
+        }
+        else {
+            var ship = document.getElementsByClassName('deck2')[i - 3];
+            ship.setAttribute('src', '../images/deck2_90.png');
+            ship.setAttribute('width', '46');
+            ship.setAttribute('height', '93');
+            ship.style.position = 'absolute';
+            ship.style.left = coordinateMatrix[userFieldInfo[i].x[0]] + indentX + 'px';
+            ship.style.top = coordinateMatrix[userFieldInfo[i].y[0]] + indentY + 'px'; 
+        }
+    }
+    for (var i = 6; i <= 9; i++) {
+        var ship = document.getElementsByClassName('deck1')[i - 6];
+        ship.style.position = 'absolute';
+        ship.style.left = coordinateMatrix[userFieldInfo[i].x[0]] + indentX + 'px';
+        ship.style.top = coordinateMatrix[userFieldInfo[i].y[0]] + indentY + 'px'; 
+    }
 }
 
 window.onload = function() {
     $('.auto-placement-btn').click(fillUserField);
-
-    var sizeCoordinateMatrix = 10;
-    var coordinateMatrix = new Array(sizeCoordinateMatrix);
-    for (var i = 0; i < 3; i++) {
-        coordinateMatrix[i] = 52.8 * i + 5;
-    }
-    for (var i = 3; i < 6; i++) {
-        coordinateMatrix[i] = 52.8 * i + 3;
-    }
-    for (var i = 6; i < sizeCoordinateMatrix; i++) {
-        coordinateMatrix[i] = 52.8 * i + 1;
-    }
 
     document.getElementsByClassName('deck4')[0].ondblclick = function () {
         var width = this.getAttribute('width');
