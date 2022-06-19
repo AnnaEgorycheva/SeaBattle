@@ -61,7 +61,7 @@ window.onload = function() {
         var imgDeck4 = new Image();
         imgDeck4.src = "../images/deck4.png";
         imgDeck4.onload = function() {
-            contextMy.drawImage(imgDeck490, coordinateMatrix[x], coordinateMatrix[y], 197, 46);
+            contextMy.drawImage(imgDeck4, coordinateMatrix[x], coordinateMatrix[y], 197, 46);
         };
     };
     function deck4_90(x, y) {
