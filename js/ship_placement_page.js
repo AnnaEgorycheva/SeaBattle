@@ -1,5 +1,5 @@
-var sizeCoordinateMatrix = 10;
-var coordinateMatrix = new Array(sizeCoordinateMatrix);
+let sizeCoordinateMatrix = 10;
+let coordinateMatrix = new Array(sizeCoordinateMatrix);
 for (var i = 0; i < 3; i++) {
     coordinateMatrix[i] = 52.8 * i + 5;
 }
@@ -86,8 +86,15 @@ function drawingShips(userFieldInfo) {
     }
 }
 
+function s() {
+    let userFieldInfo = getShipsLocation(chooseAlgorithmBasedOnLevel('easy'));
+    //drawingShips(userFieldInfo);
+    localStorage.setItem('userFieldInfo', JSON.stringify(userFieldInfo));
+}
+
 window.onload = function() {
     $('.auto-placement-btn').click(fillUserField);
+    $('.start-btn').click(s);
 
     document.getElementsByClassName('deck4')[0].ondblclick = function () {
         var width = this.getAttribute('width');

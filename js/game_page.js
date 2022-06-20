@@ -16,7 +16,7 @@ function createPlayers() {
 
 window.onload = function() {
     createPlayers();
-
+    
     let canvasOpponent = document.getElementsByClassName("opponent-playing-field");
     let canvasMy = document.getElementsByClassName("my-playing-field");
     let contextOpponent = canvasOpponent[0].getContext("2d");
@@ -27,7 +27,10 @@ window.onload = function() {
         contextOpponent.drawImage(imgPlayingField, 0, 0, 528, 528);
         contextMy.drawImage(imgPlayingField, 0, 0, 528, 528);
     };
+
     drawingShips(user.ships);
+    play();
+
     function drawingShips(userShipsInfo) {
         if (userShipsInfo[0].direction == 'horizontal') {
             deck4(userShipsInfo[0].decks[0].position.x, userShipsInfo[0].decks[0].position.y);
@@ -115,24 +118,15 @@ window.onload = function() {
     }; 
     
     function play(){
-        let cell;
-        while(isGameEnded==false){
-            userMove();
-            let res = false;
-            do{
-                cell = enemy.toPlay(user.playerField);
-                res = enemy.getEnemyStatus();
-                if(res){
-                    hitEnemy(cell.x, cell.y);
-                }
-                else{
-                    emptyCageEnemy(cell.x,cell.y);
-                }
-            } while(res);
+        if(isGameEnded == true) {
+            document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "normal";
+            document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "normal";
+            $('#victoryModal').modal('show');
+            //$('#lossModal').modal('show');
+            return;
         }
+        userMove();
     }
-
-    play();
     function userMove() {
         document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "normal";
         document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "bold";
@@ -148,8 +142,25 @@ window.onload = function() {
                 canvasOpponent[0].onmousedown = null;
                 document.getElementsByClassName("field-owner-name-opponent")[0].style.fontWeight = "normal";
                 document.getElementsByClassName("field-owner-name-me")[0].style.fontWeight = "bold";
+                enemyMove();
             }
         }; 
+    }
+
+    function enemyMove() {
+        let res = false;
+        let cell;
+        do{
+            cell = enemy.toPlay(user.playerField);
+            res = enemy.getEnemyStatus();
+            if(res){
+                hitEnemy(cell.x, cell.y);
+            }
+            else{
+                emptyCageEnemy(cell.x,cell.y);
+            }
+        } while(res);
+        play();
     }
 
     function identifyCell(coordinate) {
