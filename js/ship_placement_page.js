@@ -86,15 +86,111 @@ function drawingShips(userFieldInfo) {
     }
 }
 
-function s() {
+function saveTheArrangement() {
     let userFieldInfo = getShipsLocation(chooseAlgorithmBasedOnLevel('easy'));
-    //drawingShips(userFieldInfo);
+    userFieldInfo = bindingOfShips(userFieldInfo);
     localStorage.setItem('userFieldInfo', JSON.stringify(userFieldInfo));
+}
+
+function bindingOfShips(userFieldInfo) {
+    var indentX = (window.innerWidth - 528) / 2;
+    var indentY = 94;
+    var deck4 = document.getElementsByClassName('deck4')[0];
+    var deck3 = document.getElementsByClassName('deck3');
+    var deck2 = document.getElementsByClassName('deck2');
+    var deck1 = document.getElementsByClassName('deck1');
+    var x;
+    var y;
+    for (var i = 0; i < sizeCoordinateMatrix; i++) {
+        if (parseInt(coordinateMatrix[i]) == parseInt(deck4.style.left) - indentX) {
+            x = i;
+        }
+        if (parseInt(coordinateMatrix[i]) == parseInt(deck4.style.top) - indentY) {
+            y = i;
+        }
+    }
+    if (deck4.getAttribute('width') == '197') {
+        userFieldInfo[0].direction = 'horizontal';
+        for (var i = 0; i < 4; i++) {
+            userFieldInfo[0].x[i] = x + i;
+            userFieldInfo[0].y[i] = y;
+        }
+    } 
+    else {
+        userFieldInfo[0].direction = 'vertical';
+        for (var i = 0; i < 4; i++) {
+            userFieldInfo[0].y[i] = y + i;
+            userFieldInfo[0].x[i] = x;
+        }
+    }
+    for (var j = 0; j < 2; j++) {
+        for (var a = 0; a < sizeCoordinateMatrix; a++) {
+            if (parseInt(coordinateMatrix[a]) == parseInt(deck3[j].style.left) - indentX) {
+                x = a;
+            }
+            if (parseInt(coordinateMatrix[a]) == parseInt(deck3[j].style.top) - indentY) {
+                y = a;
+            }
+        }
+        if (deck3[j].getAttribute('width') == '147') {
+            userFieldInfo[1 + j].direction = 'horizontal';
+            for (var i = 0; i < 3; i++) {
+                userFieldInfo[1 + j].x[i] = x + i;
+                userFieldInfo[1 + j].y[i] = y;
+            }
+        } 
+        else {
+            userFieldInfo[1 + j].direction = 'vertical';
+            for (var i = 0; i < 3; i++) {
+                userFieldInfo[1 + j].y[i] = y + i;
+                userFieldInfo[1 + j].x[i] = x;
+            }
+        }
+    }
+    for (var j = 0; j < 3; j++) {
+        for (var a = 0; a < sizeCoordinateMatrix; a++) {
+            if (parseInt(coordinateMatrix[a]) == parseInt(deck2[j].style.left) - indentX) {
+                x = a;
+            }
+            if (parseInt(coordinateMatrix[a]) == parseInt(deck2[j].style.top) - indentY) {
+                y = a;
+            }
+        }
+        if (deck2[j].getAttribute('width') == '93') {
+            userFieldInfo[3 + j].direction = 'horizontal';
+            for (var i = 0; i < 2; i++) {
+                userFieldInfo[3 + j].x[i] = x + i;
+                userFieldInfo[3 + j].y[i] = y;
+            }
+        } 
+        else {
+            userFieldInfo[3 + j].direction = 'vertical';
+            for (var i = 0; i < 2; i++) {
+                userFieldInfo[3 + j].y[i] = y + i;
+                userFieldInfo[3 + j].x[i] = x;
+            }
+        }
+    }
+
+    for (var j = 0; j < 4; j++) {
+        for (var a = 0; a < sizeCoordinateMatrix; a++) {
+            if (parseInt(coordinateMatrix[a]) == parseInt(deck1[j].style.left) - indentX) {
+                x = a;
+            }
+            if (parseInt(coordinateMatrix[a]) == parseInt(deck1[j].style.top) - indentY) {
+                y = a;
+            }
+        }
+        userFieldInfo[6 + j].x[0] = x;
+        userFieldInfo[6 + j].y[0] = y;
+    }
+
+    return userFieldInfo;
 }
 
 window.onload = function() {
     $('.auto-placement-btn').click(fillUserField);
-    $('.start-btn').click(s);
+    $('.start-btn').click(saveTheArrangement);
 
     document.getElementsByClassName('deck4')[0].ondblclick = function () {
         var width = this.getAttribute('width');
